@@ -1,10 +1,10 @@
- import 'package:driver/values/Clr.dart';
+import 'package:driver/values/Clr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ignore: non_constant_identifier_names
-Widget BottomNavigation(_navigationMenuIndex, switchFragment) {
+Widget BottomNavigation(_navigationMenuIndex, onTapBottomMenu) {
   return BottomNavigationBar(
     backgroundColor: Clr.white,
     selectedItemColor: Clr.green,
@@ -14,19 +14,19 @@ Widget BottomNavigation(_navigationMenuIndex, switchFragment) {
     unselectedLabelStyle: TextStyle(color: Clr.green),
     currentIndex: _navigationMenuIndex,
     onTap: (int index) {
-      switchFragment(index);
+      onTapBottomMenu(index);
     },
     items: [
       BottomNavigationBarItem(
-        label: 'Available',
-        icon: Icon(FontAwesomeIcons.gifts),
-      ),
-      BottomNavigationBarItem(
-        label: 'Running',
-        icon: Icon(FontAwesomeIcons.sync),
+        label: 'Withdraw',
+        icon: Icon(FontAwesomeIcons.plusCircle),
       ),
       BottomNavigationBarItem(
         label: 'History',
+        icon: Icon(FontAwesomeIcons.sync),
+      ),
+      BottomNavigationBarItem(
+        label: 'Account',
         icon: Icon(FontAwesomeIcons.history),
       ),
     ],

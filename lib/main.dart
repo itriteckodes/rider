@@ -4,6 +4,8 @@ import 'package:driver/screens/home/home_screen.dart';
 import 'package:driver/screens/login/login_screen.dart';
 import 'package:driver/screens/parcel/parcel_screen.dart';
 import 'package:driver/screens/passenger/passenger_screen.dart';
+import 'package:driver/screens/profile/profile_screen.dart';
+import 'package:driver/screens/withdraw/withdraw_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
         'gosit': (context) => GositScreen(),
         'parcel': (context) => ParcelScreen(),
         'passenger': (context) => PassengerScreen(),
+        'profile': (context) => ProfileScreen(),
+        'withdraw': (context) => WithdrawScreen(),
       },
     );
   }

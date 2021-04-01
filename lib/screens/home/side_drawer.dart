@@ -85,7 +85,7 @@ Widget SideDrawer(context) {
             title: Text('Withdraw'),
             selected: false,
             onTap: () {
-              Navigator.popAndPushNamed(context, 'parcel');
+              Navigator.popAndPushNamed(context, 'withdraw');
             },
           ),
           ListTile(
@@ -102,7 +102,7 @@ Widget SideDrawer(context) {
             title: Text('Profile'),
             selected: false,
             onTap: () {
-              Navigator.popAndPushNamed(context, 'parcel');
+              Navigator.popAndPushNamed(context, 'profile');
             },
           ),
           ListTile(

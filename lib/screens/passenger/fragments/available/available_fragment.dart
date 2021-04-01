@@ -1,71 +1,109 @@
-import 'package:driver/screens/parcel/fragments/available/order_card.dart';
+import 'dart:convert';
+
+import 'package:driver/api/passenger_api.dart';
+import 'package:driver/models/PassengerOrder.dart';
+import 'package:driver/screens/passenger/fragments/available/order_card.dart';
+import 'package:driver/screens/passenger/fragments/available/waiting_fragment.dart';
 import 'package:driver/values/Clr.dart';
-import 'package:driver/values/Sizer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AvailableFragment extends StatefulWidget {
-  AvailableFragment({Key key}) : super(key: key);
+  AvailableFragment({Key key, @required this.switchFragment}) : super(key: key);
 
+  final switchFragment;
   @override
   _AvailableFragmentState createState() => _AvailableFragmentState();
 }
 
 class _AvailableFragmentState extends State<AvailableFragment> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  var firebaseSubscription;
+
   List _orders = [];
 
   @override
   void initState() {
     super.initState();
-    EasyLoading.show();
+    fetchOrders();
+    startListener();
+  }
+
+  @override
+  void dispose() {
+    firebaseSubscription.cancel();
+    super.dispose();
   }
 
   void onAccept() {
     setState(() {
       _orders = [];
     });
+    widget.switchFragment(1);
   }
 
-  @override
-  void dispose() {
-    EasyLoading.dismiss();
-    super.dispose();
+  void fetchOrders() async {
+    var orders = await PassengerApi.availableOrders();
+    setState(() {
+      _orders = orders;
+    });
+  }
+
+  void addToOrders(order) async {
+    setState(() {
+      _orders.add(order);
+    });
+  }
+
+  void removeFromOrders(order) async {
+    setState(() {
+      _orders.removeWhere((item) => item.id == order.id);
+    });
+  }
+
+  void streamListener(message) {
+    var response = jsonDecode(message["data"]["body"].toString());
+    if (response["type"] == "newpassengerorder") {
+      addToOrders(PassengerOrder(response));
+    } else if (response["type"] == "removepassengerorder") {
+      removeFromOrders(PassengerOrder(response));
+    }
+  }
+
+  void startListener() {
+    _firebaseMessaging.configure(
+      onMessage: (message) async {
+        streamListener(message);
+      },
+      onLaunch: (message) async {
+        streamListener(message);
+      },
+      onResume: (message) async {
+        streamListener(message);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
-      height: MediaQuery.of(context).size.height * 0.76,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top : 50),
-            child: Column(
+    return _orders.length < 1
+        ? waitingFragment(context)
+        : Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Clr.white),
+            height: MediaQuery.of(context).size.height * 0.76,
+            child: ListView(
               children: [
-                Text(
-                  'Wating for customers',
-                  style: TextStyle(
-                    color: Clr.green,
-                    fontWeight: FontWeight.bold,
-                    fontSize: Sizer.fontFour(),
+                if (_orders.length > 0)
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                Text(
-                  "please don't close this screen",
-                  style: TextStyle(
-                    color: Clr.green,
-                    fontWeight: FontWeight.bold,
-                    fontSize: Sizer.fontSix(),
-                  ),
-                )
+                if (_orders.length > 0)
+                  for (var order in _orders)
+                    OrderCard(order: order, onAccept: onAccept),
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 }

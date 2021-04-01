@@ -1,14 +1,14 @@
-import 'package:driver/models/ParcelOrder.dart';
-import 'package:driver/models/PassengerOrder.dart';
-import 'package:driver/screens/passenger/fragments/available/accept_modal.dart';
+import 'package:driver/models/Order.dart';
+import 'package:driver/screens/food/fragments/available/accept_modal.dart';
+import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({Key key, @required this.order, @required this.onAccept}) : super(key: key);
-  final PassengerOrder order;
-  final onAccept;
+  const OrderCard({Key key, @required this.order, @required this.onAdd}) : super(key: key);
+  final Order order;
+  final onAdd;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,16 +18,15 @@ class OrderCard extends StatelessWidget {
           height: 90,
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
-            onTap: () {
-              showDialog(
+            onTap: () async {
+              await showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AcceptModal(
-                    order: order,
-                    onAccept: onAccept,
-                  );
+                  return NewModal();
                 },
-              );
+              ).then((val) {
+                onAdd();
+              });
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -56,7 +55,7 @@ class OrderCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  order.customer.name,
+                                  order.name,
                                   style: TextStyle(
                                     color: Clr.black,
                                     fontSize: Sizer.fontSix(),
@@ -64,7 +63,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  order.getVehicleType(),
+                                  order.address,
                                   style: TextStyle(
                                     color: Clr.silver,
                                     fontSize: Sizer.fontSeven(),
@@ -75,11 +74,11 @@ class OrderCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Distance : ',
+                                      'Distance: ',
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.originDistance + ' km',
+                                      order.destinationDistance.toString() + ' km',
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

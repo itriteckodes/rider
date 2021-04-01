@@ -29,7 +29,7 @@ class _PassengerScreenState extends State<PassengerScreen> {
   Widget build(BuildContext context) {
     
     final _fragments = [
-      AvailableFragment(),
+      AvailableFragment(switchFragment: switchFragment,),
       RunningFragment(switchFragment: switchFragment),
       HistoryFragment(),
     ];

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:driver/auth/auth.dart';
-import 'package:driver/models/ParcelOrder.dart';
+import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class PassengerApi {
   static availableOrders() async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/available';
+    var url = Strings.baseUrl + 'passenger/order/available';
 
     url += '?api_token=' + Auth.user().apiToken;
 
@@ -24,7 +24,7 @@ class PassengerApi {
     if (!response['error']) {
       List orders = [];
       for (var order in response['orders']) {
-        orders.add(ParcelOrder(order));
+        orders.add(PassengerOrder(order));
       }
       return orders;
     } else {
@@ -32,9 +32,9 @@ class PassengerApi {
     }
   }
 
-  static runningOrders() async {
+  static runningOrder() async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/running';
+    var url = Strings.baseUrl + 'passenger/order/running';
 
     url += '?api_token=' + Auth.user().apiToken;
 
@@ -47,13 +47,10 @@ class PassengerApi {
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      List orders = [];
-      for (var order in response['orders']) {
-        orders.add(ParcelOrder(order));
-      }
-      return orders;
+      return PassengerOrder(response['order']);
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
+      return null;
     }
   }
 
@@ -74,7 +71,7 @@ class PassengerApi {
     if (!response['error']) {
       List orders = [];
       for (var order in response['orders']) {
-        orders.add(ParcelOrder(order));
+        orders.add(PassengerOrder(order));
       }
       return orders;
     } else {
@@ -84,7 +81,7 @@ class PassengerApi {
 
   static acceptOrder(order) async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/accept';
+    var url = Strings.baseUrl + 'passenger/order/accept';
 
     url += '?api_token=' + Auth.user().apiToken;
 
@@ -119,7 +116,7 @@ class PassengerApi {
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      return ParcelOrder(response['order']);
+      return PassengerOrder(response['order']);
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
       return false;

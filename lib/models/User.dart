@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 class User {
-  var name, email, apiToken, firebaseToken;
+  var name, email, phone, address, apiToken, firebaseToken;
 
   User(user) {
     name = user['name'] ?? "";
     email = user['email'] ?? "";
+    phone = user['phone'] ?? "";
+    address = user['address'] ?? "";
     apiToken = user['api_token'] ?? "";
     firebaseToken = user['firebase_token'] ?? "";
   }

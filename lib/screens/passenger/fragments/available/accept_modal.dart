@@ -1,7 +1,8 @@
 
 import 'package:driver/api/parcel_api.dart';
-import 'package:driver/models/ParcelOrder.dart';
-import 'package:driver/screens/parcel/fragments/available/button.dart';
+import 'package:driver/api/passenger_api.dart';
+import 'package:driver/models/PassengerOrder.dart';
+import 'package:driver/screens/passenger/fragments/available/button.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +11,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AcceptModal extends StatelessWidget {
   const AcceptModal({Key key, @required this.order, @required this.onAccept}) : super(key: key);
 
-  final ParcelOrder order;
+  final PassengerOrder order;
   final onAccept;
 
   acceptOrder(context) async {
-    if (await ParcelApi.acceptOrder(order))
-      Fluttertoast.showToast(msg: "Order accepted");
-    else
-      Fluttertoast.showToast(msg: "Oops! Something went wrong");
-    onAccept();
+    var _order =  await PassengerApi.acceptOrder(order);
+    Fluttertoast.showToast(msg: "Order accepted");
+
+    onAccept(_order);
     Navigator.of(context).pop();
   }
 
@@ -43,14 +43,14 @@ class AcceptModal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                order.name,
+                order.customer.name,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                order.address,
+                order.customer.address,
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
@@ -60,14 +60,6 @@ class AcceptModal extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Parcel Size : ',
-                    style: TextStyle(
-                      color: Clr.green,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizer.fontSix(),
-                    ),
-                  ),
                   Text(
                     order.size,
                     style: TextStyle(
@@ -107,7 +99,7 @@ class AcceptModal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Order Distance : ',
+                    'Trip Distance : ',
                     style: TextStyle(
                       color: Clr.green,
                       fontWeight: FontWeight.bold,
