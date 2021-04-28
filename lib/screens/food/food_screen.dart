@@ -19,13 +19,7 @@ class _FoodScreenState extends State<FoodScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   int _navigationMenuIndex = 0;
 
-  var _fragments = [
-    AvailableFragment(),
-    RunningFragment(),
-    HistoryFragment(),
-  ];
-
-  onTapBottomMenu(int index) {
+  switchFragment(int index) {
     setState(() {
       _navigationMenuIndex = index;
     });
@@ -33,6 +27,13 @@ class _FoodScreenState extends State<FoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
+    var _fragments = [
+      AvailableFragment(switchFragment: switchFragment),
+      RunningFragment(),
+      HistoryFragment(),
+    ];
+
     return Scaffold(
       backgroundColor: Clr.grey,
       body: SafeArea(
@@ -80,8 +81,7 @@ class _FoodScreenState extends State<FoodScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigation(_navigationMenuIndex, onTapBottomMenu),
+      bottomNavigationBar: BottomNavigation(_navigationMenuIndex, switchFragment),
     );
   }
-
 }

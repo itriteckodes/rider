@@ -1,5 +1,5 @@
-import 'package:driver/api/gosit_api.dart';
-import 'package:driver/screens/gosit/fragments/history/order_card.dart';
+import 'package:driver/api/withdraw_api.dart';
+import 'package:driver/screens/withdraw/fragments/history/request_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 
@@ -11,25 +11,18 @@ class HistoryFragment extends StatefulWidget {
 }
 
 class _HistoryFragmentState extends State<HistoryFragment> {
-  List _orders = [];
+  List _requests = [];
 
   @override
   void initState() {
     super.initState();
-    fetchOrders();
+    fetchRequests();
   }
 
-  void onAccept() {
+  void fetchRequests() async {
+    var requests = await WithdrawApi.history();
     setState(() {
-      _orders = [];
-    });
-    fetchOrders();
-  }
-
-  void fetchOrders() async {
-    var orders = await GositApi.orderHistory();
-    setState(() {
-      _orders = orders;
+      _requests = requests;
     });
   }
 
@@ -44,8 +37,8 @@ class _HistoryFragmentState extends State<HistoryFragment> {
           SizedBox(
             height: 10,
           ),
-          if (_orders.length > 0)
-            for (var order in _orders) OrderCard(order: order),
+          if (_requests.length > 0)
+            for (var request in _requests) RequestCard(request: request),
         ],
       ),
     );

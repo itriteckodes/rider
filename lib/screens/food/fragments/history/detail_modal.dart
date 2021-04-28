@@ -1,4 +1,4 @@
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/screens/food/fragments/history/button.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
@@ -10,7 +10,7 @@ class DetailModal extends StatelessWidget {
     @required this.order,
   }) : super(key: key);
 
-  final Order order;
+  final FoodOrder order;
 
   @override
   Widget build(BuildContext context) {

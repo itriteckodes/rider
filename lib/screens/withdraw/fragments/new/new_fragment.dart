@@ -1,5 +1,6 @@
 import 'package:driver/api/withdraw_api.dart';
 import 'package:driver/screens/withdraw/fragments/new/account_card.dart';
+import 'package:driver/screens/withdraw/fragments/new/request_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class NewFragment extends StatefulWidget {
 }
 
 class NewFragmentState extends State<NewFragment> {
-   List _accounts = [];
+  List _accounts = [];
 
   @override
   void initState() {
@@ -26,6 +27,15 @@ class NewFragmentState extends State<NewFragment> {
     });
   }
 
+  onTapCard(account) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return RequestModal(account: account);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +48,7 @@ class NewFragmentState extends State<NewFragment> {
             height: 10,
           ),
           if (_accounts.length > 0)
-            for (var account in _accounts) AccountCard(account: account),
+            for (var account in _accounts) AccountCard(account: account, onTap: onTapCard,),
         ],
       ),
     );

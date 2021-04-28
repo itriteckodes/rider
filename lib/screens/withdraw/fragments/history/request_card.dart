@@ -1,11 +1,11 @@
-import 'package:driver/models/GositOrder.dart';
+import 'package:driver/models/WithdrawRequest.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  const OrderCard({Key key, @required this.order}) : super(key: key);
-  final GositOrder order;
+class RequestCard extends StatelessWidget {
+  const RequestCard({Key key, @required this.request}) : super(key: key);
+  final WithdrawRequest request;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,9 +32,7 @@ class OrderCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 8.0, right: 8.0, bottom: 8.0),
-                            child: Image(
-                              image: AssetImage('lib/assets/images/user.png'),
-                            ),
+                            child: FadeInImage(image: NetworkImage(request.image), placeholder: AssetImage('lib/assets/images/loader.png')),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -43,7 +41,7 @@ class OrderCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  order.startedAt,
+                                  'PKR '+ request.amount.toString() + '/-',
                                   style: TextStyle(
                                     color: Clr.black,
                                     fontSize: Sizer.fontSix(),
@@ -51,7 +49,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Fare : pkr ' + order.fare.toString() + '/-',
+                                request.method + ' ' + request.accountNumber,
                                   style: TextStyle(
                                     color: Clr.silver,
                                     fontSize: Sizer.fontSeven(),
@@ -62,11 +60,11 @@ class OrderCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Distance: ',
+                                      request.getStatus() + ' ',
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.distance.toString() + ' km',
+                                      request.date,
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

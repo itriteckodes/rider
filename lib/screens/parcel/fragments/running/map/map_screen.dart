@@ -111,6 +111,7 @@ class _MapScreenState extends State<MapScreen> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
+    
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,

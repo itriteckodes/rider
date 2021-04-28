@@ -1,14 +1,11 @@
-import 'package:driver/models/Order.dart';
-import 'package:driver/screens/food/fragments/available/accept_modal.dart';
-import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
+import 'package:driver/models/Transaction.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  const OrderCard({Key key, @required this.order, @required this.onAdd}) : super(key: key);
-  final Order order;
-  final onAdd;
+class TransactionCard extends StatelessWidget {
+  const TransactionCard({Key key, @required this.transaction}) : super(key: key);
+  final Transacation transaction;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,16 +15,7 @@ class OrderCard extends StatelessWidget {
           height: 90,
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
-            onTap: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return NewModal();
-                },
-              ).then((val) {
-                onAdd();
-              });
-            },
+            onTap: () {},
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -44,9 +32,7 @@ class OrderCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 8.0, right: 8.0, bottom: 8.0),
-                            child: Image(
-                              image: AssetImage('lib/assets/images/user.png'),
-                            ),
+                            child: FadeInImage(image: NetworkImage('gfdg'), placeholder: AssetImage('lib/assets/images/loader.png')),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -55,7 +41,7 @@ class OrderCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  order.name,
+                                  'PKR f dsf sd/-',
                                   style: TextStyle(
                                     color: Clr.black,
                                     fontSize: Sizer.fontSix(),
@@ -63,7 +49,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  order.address,
+                                'sdfsd fs dfs ',
                                   style: TextStyle(
                                     color: Clr.silver,
                                     fontSize: Sizer.fontSeven(),
@@ -74,11 +60,11 @@ class OrderCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Distance: ',
+                                      'fds fsd f  ',
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.destinationDistance.toString() + ' km',
+                                      'dfsf',
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

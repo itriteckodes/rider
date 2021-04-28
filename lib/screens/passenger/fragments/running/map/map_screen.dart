@@ -1,10 +1,10 @@
 import 'package:driver/api/location_api.dart';
-import 'package:driver/api/parcel_api.dart';
-import 'package:driver/models/ParcelOrder.dart';
+import 'package:driver/api/passenger_api.dart';
+import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
-import 'package:driver/screens/parcel/fragments/running/map/bottom_card.dart';
-import 'package:driver/screens/parcel/fragments/running/map/location_button.dart';
-import 'package:driver/screens/parcel/fragments/running/map/zoom_buttons.dart';
+import 'package:driver/screens/passenger/fragments/running/map/bottom_card.dart';
+import 'package:driver/screens/passenger/fragments/running/map/location_button.dart';
+import 'package:driver/screens/passenger/fragments/running/map/zoom_buttons.dart';
 import 'package:driver/values/Constants.dart';
 import 'package:driver/values/RiderStatus.dart';
 import 'package:driver/values/secrets.dart';
@@ -18,7 +18,7 @@ import 'package:location/location.dart' as Loc;
 class MapScreen extends StatefulWidget {
   MapScreen({Key key, @required this.order}) : super(key: key);
 
-  final ParcelOrder order;
+  final PassengerOrder order;
   @override
   _MapScreenState createState() => _MapScreenState(order);
 }
@@ -43,19 +43,19 @@ class _MapScreenState extends State<MapScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ParcelOrder _order;
+  PassengerOrder _order;
   RouteInfo _route;
 
   bool buttonEnabled = false;
 
   void pickOrder() async {
-    await ParcelApi.pickOrder(_order);
+    await PassengerApi.pickOrder(_order);
     Fluttertoast.showToast(msg: "Order picked successfuly");
     Navigator.of(context).pop();
   }
 
   void deliverOrder() async {
-    await ParcelApi.deliverOrder(_order);
+    await PassengerApi.deliverOrder(_order);
     Fluttertoast.showToast(msg: "Order delivered successfuly");
     Navigator.of(context).pop();
   }

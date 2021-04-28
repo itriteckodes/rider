@@ -26,9 +26,13 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
   }
 
   onTapBottomMenu(int index) async {
-      setState(() {
-        _navigationMenuIndex = index;
-      });
+    setState(() {
+      _navigationMenuIndex = index;
+    });
+  }
+
+  switchFragment(index) {
+    onTapBottomMenu(index);
   }
 
   @override
@@ -36,7 +40,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
     _screens = [
       NewFragment(),
       HistoryFragment(),
-      AccountFragment()
+      AccountFragment(switchFragment : switchFragment),
     ];
 
     return Scaffold(

@@ -2,7 +2,7 @@ class Account {
   var id, title, number, image, description, method, status;
 
   Account(account) {
-    id = account['name'] ?? "";
+    id = account['id'] ?? "";
     title = account['title'] ?? "";
     number = account['account_no'] ?? "";
     image = account['method']['image'] ?? "";

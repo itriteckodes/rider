@@ -26,6 +26,10 @@ Widget BottomNavigation(_navigationMenuIndex, onTapBottomMenu) {
         icon: Icon(FontAwesomeIcons.sync),
       ),
       BottomNavigationBarItem(
+        label: 'Map',
+        icon: Icon(FontAwesomeIcons.globe),
+      ),
+      BottomNavigationBarItem(
         label: 'History',
         icon: Icon(FontAwesomeIcons.history),
       ),

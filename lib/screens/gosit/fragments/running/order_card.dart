@@ -1,11 +1,8 @@
-import 'package:driver/api/gosit_api.dart';
-import 'package:driver/helpers/location.dart';
 import 'package:driver/models/GositOrder.dart';
 import 'package:driver/screens/gosit/fragments/running/show_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key key, @required this.order, @required this.onFinish}) : super(key: key);
@@ -21,14 +18,11 @@ class OrderCard extends StatelessWidget {
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
             onTap: () async {
-              EasyLoading.show();
-              var _order = await GositApi.showOrder(await Geo.location(), order);
-              EasyLoading.dismiss();
               var finished = await showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return ShowModal(
-                    order: _order,
+                    order: order,
                   );
                 },
               );
@@ -69,7 +63,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Running',
+                                  'PKR ' + order.fare.toString() + '/- (' + order.distance.toString() + ' km)',
                                   style: TextStyle(
                                     color: Clr.black,
                                     fontSize: Sizer.fontSeven(),

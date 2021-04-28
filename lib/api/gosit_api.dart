@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'package:driver/api/api.dart';
 import 'package:driver/auth/auth.dart';
 import 'package:driver/models/GositOrder.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:location/location.dart';
 
 class GositApi {
@@ -15,14 +15,12 @@ class GositApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      List orders = [];
+      List <GositOrder> orders = [];
       for (var order in response['orders']) {
         orders.add(GositOrder(order));
       }
@@ -40,9 +38,7 @@ class GositApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -66,15 +62,16 @@ class GositApi {
 
     var data = {'origin_location': (location.latitude.toString() + ", " + location.longitude.toString()), 'name': name};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
+    
 
     if (!response['error']) {
+      Fluttertoast.showToast(msg: 'Order started');
       return true;
     } else {
+      Fluttertoast.showToast(msg: response['error_data']);
       return false;
     }
   }
@@ -86,9 +83,7 @@ class GositApi {
 
     var data = {'gosit_id': order.id, 'destination_location': (location.latitude.toString() + ", " + location.longitude.toString())};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     if (!response['error']) {
       return GositOrder(response['order']);
@@ -98,22 +93,19 @@ class GositApi {
   }
 
   static finishOrder(LocationData location, GositOrder order) async {
-    EasyLoading.show();
     var url = Strings.baseUrl + 'gosit/order/finish';
 
     url += '?api_token=' + Auth.user().apiToken;
 
     var data = {'gosit_id': order.id, 'destination_location': (location.latitude.toString() + ", " + location.longitude.toString())};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
-
-    EasyLoading.dismiss();
+    var response = await Api.execute(url: url, data: data);
 
     if (!response['error']) {
+      Fluttertoast.showToast(msg: 'Order finished');
       return GositOrder(response['order']);
     } else {
+      Fluttertoast.showToast(msg: response['error_data']);
       return false;
     }
   }

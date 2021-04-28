@@ -1,11 +1,11 @@
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key key, @required this.order, @required this.onOrderClick}) : super(key: key);
-  final Order order;
+  final FoodOrder order;
   final onOrderClick;
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:driver/api/food_api.dart';
 import 'package:driver/api/parcel_api.dart';
 import 'package:driver/screens/parcel/fragments/history/order_card.dart';
 import 'package:driver/values/Clr.dart';

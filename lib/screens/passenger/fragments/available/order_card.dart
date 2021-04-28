@@ -1,4 +1,3 @@
-import 'package:driver/models/ParcelOrder.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/screens/passenger/fragments/available/accept_modal.dart';
 import 'package:driver/values/Clr.dart';
@@ -18,16 +17,14 @@ class OrderCard extends StatelessWidget {
           height: 90,
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
-            onTap: () {
-              showDialog(
+            onTap: () async {
+              var accepted = await showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AcceptModal(
-                    order: order,
-                    onAccept: onAccept,
-                  );
+                  return AcceptModal(order: order);
                 },
               );
+              if (accepted) onAccept();
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -79,7 +76,7 @@ class OrderCard extends StatelessWidget {
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.originDistance + ' km',
+                                      order.distance.toString() + ' km',
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

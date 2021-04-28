@@ -1,6 +1,6 @@
 import 'package:driver/api/food_api.dart';
 import 'package:driver/api/location_api.dart';
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
 import 'package:driver/screens/food/fragments/running/map/bottom_card.dart';
 import 'package:driver/screens/food/fragments/running/map/location_button.dart';
@@ -19,7 +19,7 @@ import 'package:location/location.dart' as Loc;
 class MapScreen extends StatefulWidget {
   MapScreen({Key key, @required this.order}) : super(key: key);
 
-  final Order order;
+  final FoodOrder order;
   @override
   _MapScreenState createState() => _MapScreenState(order);
 }
@@ -44,7 +44,7 @@ class _MapScreenState extends State<MapScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Order _order;
+  FoodOrder _order;
   RouteInfo _route;
 
   bool buttonEnabled = false;

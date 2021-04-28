@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'package:driver/api/api.dart';
 import 'package:driver/auth/auth.dart';
 import 'package:driver/models/ParcelOrder.dart';
 import 'package:driver/values/Strings.dart';
@@ -15,9 +14,7 @@ class ParcelApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -40,9 +37,7 @@ class ParcelApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -65,9 +60,7 @@ class ParcelApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -90,9 +83,7 @@ class ParcelApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -112,9 +103,7 @@ class ParcelApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -134,9 +123,7 @@ class ParcelApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 

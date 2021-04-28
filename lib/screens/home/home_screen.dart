@@ -1,6 +1,7 @@
-import 'package:driver/screens/home/box.dart';
+import 'package:driver/api/status_api.dart';
+import 'package:driver/auth/auth.dart';
 import 'package:driver/screens/home/card.dart';
-import 'package:driver/screens/home/side_drawer.dart';
+import 'package:driver/screens/static/side_drawer.dart';
 import 'package:driver/screens/static/home_baloon.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
@@ -17,6 +18,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
+  changeOnlineStatus() async {
+    if (Auth.user().online)
+      await StatusApi.offline();
+    else
+      await StatusApi.online();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: [
-              HomeBaloon(context),
+              HomeBaloon(context, color: Auth.user().online ? Clr.green : Clr.red),
               Padding(
                 padding: const EdgeInsets.only(top: 100),
                 child: Row(
@@ -60,13 +69,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        color: Clr.white,
-                        fontSize: Sizer.fontSix(),
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            changeOnlineStatus();
+                          },
+                          child: Ink(
+                            child: Container(
+                              child: Text(
+                                Auth.user().online ? 'Online' : 'Offline',
+                                style: TextStyle(
+                                  color: Clr.white,
+                                  fontSize: Sizer.fontSix(),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'map');
+                          },
+                          child: Ink(
+                            child: Container(
+                              child: Icon(
+                                FontAwesomeIcons.globe,
+                                size: Sizer.fontFour(),
+                                color: Clr.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -76,30 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: MediaQuery.of(context).size.width * 0.015,
                 child: Container(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    border: Border.all(color: Clr.green),
-                    color: Clr.white,
-                  ),
                   width: MediaQuery.of(context).size.width * 0.97,
                   height: 202,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          box(context, 'Avaialble Balance', 'PKR 2500/-', Border(right: BorderSide(color: Clr.green))),
-                          box(context, 'Lifetime Earning', 'PKR 124502/-', Border()),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          box(context, 'Total Passengers', '7758', Border(right: BorderSide(color: Clr.green), top: BorderSide(color: Clr.green))),
-                          box(context, 'Orders delivered', '931', Border(top: BorderSide(color: Clr.green))),
-                        ],
-                      ),
-                    ],
+                  child: Image(
+                    image: AssetImage('lib/assets/images/logo.png'),
                   ),
                 ),
               ),
@@ -108,16 +125,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: MediaQuery.of(context).size.width * 0.015,
                 child: Column(
                   children: [
-                    card(context, 'Go Sit', FontAwesomeIcons.bus, () {
+                    card(context, 'Ride', FontAwesomeIcons.bus, () {
                       Navigator.pushNamed(context, 'gosit');
-                    }),
-                    SizedBox(height: 5),
-                    card(context, 'Deliver Food', FontAwesomeIcons.pizzaSlice, () {
-                      Navigator.pushNamed(context, 'food');
                     }),
                     SizedBox(height: 5),
                     card(context, 'Carry Passenger', FontAwesomeIcons.car, () {
                       Navigator.pushNamed(context, 'passenger');
+                    }),
+                    SizedBox(height: 5),
+                    card(context, 'Deliver Food', FontAwesomeIcons.pizzaSlice, () {
+                      Navigator.pushNamed(context, 'food');
                     }),
                     SizedBox(height: 5),
                     card(context, 'Deliver Parsel', FontAwesomeIcons.boxOpen, () {

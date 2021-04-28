@@ -1,5 +1,3 @@
-
-import 'package:driver/api/parcel_api.dart';
 import 'package:driver/api/passenger_api.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/screens/passenger/fragments/available/button.dart';
@@ -9,17 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AcceptModal extends StatelessWidget {
-  const AcceptModal({Key key, @required this.order, @required this.onAccept}) : super(key: key);
+  const AcceptModal({Key key, @required this.order}) : super(key: key);
 
   final PassengerOrder order;
-  final onAccept;
-
   acceptOrder(context) async {
-    var _order =  await PassengerApi.acceptOrder(order);
+    await PassengerApi.acceptOrder(order);
     Fluttertoast.showToast(msg: "Order accepted");
-
-    onAccept(_order);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   @override
@@ -119,7 +113,6 @@ class AcceptModal extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -130,7 +123,7 @@ class AcceptModal extends StatelessWidget {
                     width: 10,
                   ),
                   Button(context, 'Cancel', Clr.red, onTap: (context) {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                   }),
                 ],
               ),

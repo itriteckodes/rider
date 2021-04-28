@@ -39,7 +39,7 @@ Widget SideDrawer(context) {
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.bus,color: Clr.green),
-            title: Text('Go Sit'),
+            title: Text('Ride'),
             selected: false,
             onTap: () {
               Navigator.popAndPushNamed(context, 'gosit');
@@ -81,6 +81,14 @@ Widget SideDrawer(context) {
             ),
           ),
          ListTile(
+            leading: Icon(FontAwesomeIcons.wallet, color: Clr.green),
+            title: Text('Wallet'),
+            selected: false,
+            onTap: () {
+              Navigator.popAndPushNamed(context, 'wallet');
+            },
+          ),
+          ListTile(
             leading: Icon(FontAwesomeIcons.moneyBillWave, color: Clr.green),
             title: Text('Withdraw'),
             selected: false,
@@ -93,9 +101,8 @@ Widget SideDrawer(context) {
             title: Text('Transactions'),
             selected: false,
             onTap: () {
-              Navigator.popAndPushNamed(context, 'parcel');
+              Navigator.popAndPushNamed(context, 'transactions');
             },
-
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.userCog, color: Clr.green),
@@ -110,7 +117,7 @@ Widget SideDrawer(context) {
             title: Text('Logout'),
             selected: false,
             onTap: () {
-              Navigator.popAndPushNamed(context, 'parcel');
+              Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
             },
           ),
         ],

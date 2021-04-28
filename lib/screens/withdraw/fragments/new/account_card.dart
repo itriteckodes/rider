@@ -1,15 +1,12 @@
-import 'package:driver/api/gosit_api.dart';
-import 'package:driver/helpers/location.dart';
 import 'package:driver/models/Account.dart';
-import 'package:driver/screens/gosit/fragments/running/show_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AccountCard extends StatelessWidget {
-  const AccountCard({Key key, @required this.account}) : super(key: key);
+  const AccountCard({Key key, @required this.account, @required this.onTap}) : super(key: key);
   final Account account;
+  final onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +18,7 @@ class AccountCard extends StatelessWidget {
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
             onTap: () async {
+              onTap(account);
               // EasyLoading.show();
               // var _order = await GositApi.showOrder(await Geo.location(), order);
               // EasyLoading.dismiss();
@@ -49,7 +47,7 @@ class AccountCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 8.0, right: 8.0, bottom: 8.0),
-                            child: Image.network(account.image),
+                            child: FadeInImage(image: NetworkImage(account.image), placeholder: AssetImage('lib/assets/images/loader.png')),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -60,7 +58,7 @@ class AccountCard extends StatelessWidget {
                                 Text(
                                   account.title,
                                   style: TextStyle(
-                                    color: Clr.black, 
+                                    color: Clr.black,
                                     fontSize: Sizer.fontFive(),
                                     fontWeight: FontWeight.bold,
                                   ),

@@ -1,4 +1,4 @@
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/screens/food/fragments/available/accept_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key key, @required this.order, @required this.onAccept}) : super(key: key);
-  final Order order;
+  final FoodOrder order;
   final onAccept;
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class OrderCard extends StatelessWidget {
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
             onTap: () {
-              showDialog(
+               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AcceptModal(

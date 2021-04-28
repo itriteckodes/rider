@@ -1,12 +1,16 @@
 import 'dart:convert';
-
 import 'package:driver/api/passenger_api.dart';
+import 'package:driver/helpers/location.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/screens/passenger/fragments/available/order_card.dart';
 import 'package:driver/screens/passenger/fragments/available/waiting_fragment.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart' as Loc;
+import 'package:driver/models/RouteInfo.dart';
+import 'package:driver/api/location_api.dart';
 
 class AvailableFragment extends StatefulWidget {
   AvailableFragment({Key key, @required this.switchFragment}) : super(key: key);
@@ -18,7 +22,11 @@ class AvailableFragment extends StatefulWidget {
 
 class _AvailableFragmentState extends State<AvailableFragment> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  var firebaseSubscription;
+
+  Loc.Location location = Loc.Location();
+  var locationSubscription;
+
+  Position _currentPosition;
 
   List _orders = [];
 
@@ -27,11 +35,13 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     super.initState();
     fetchOrders();
     startListener();
+    _initPostions();
+    updateCurrentPosition();
   }
 
   @override
   void dispose() {
-    firebaseSubscription.cancel();
+    locationSubscription.cancel();
     super.dispose();
   }
 
@@ -59,6 +69,32 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     setState(() {
       _orders.removeWhere((item) => item.id == order.id);
     });
+  }
+
+  getRouteInfo() async {
+    for (PassengerOrder order in _orders) {
+      RouteInfo route = await LocationApi.getRouteInfo(order.originPosition, _currentPosition);
+      order.distance = route.distance;
+    }
+    setState(() {});
+  }
+
+  runLocationService() {
+    locationSubscription = location.onLocationChanged.listen((locationData) async {
+      if (locationData != null) {
+        updateCurrentPosition();
+      }
+    });
+  }
+
+  updateCurrentPosition() async {
+    _currentPosition = await Geo.position();
+    getRouteInfo();
+  }
+
+  _initPostions() async {
+    _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    runLocationService();
   }
 
   void streamListener(message) {
@@ -90,8 +126,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
         ? waitingFragment(context)
         : Container(
             width: MediaQuery.of(context).size.width * 0.9,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Clr.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
             height: MediaQuery.of(context).size.height * 0.76,
             child: ListView(
               children: [
@@ -100,8 +135,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
                     height: 10,
                   ),
                 if (_orders.length > 0)
-                  for (var order in _orders)
-                    OrderCard(order: order, onAccept: onAccept),
+                  for (var order in _orders) OrderCard(order: order, onAccept: onAccept),
               ],
             ),
           );

@@ -1,11 +1,11 @@
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/RiderStatus.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-Widget bottomCard(context, buttonEnabled, RouteInfo route, Order order, pickOrder, deliverOrder) {
+Widget bottomCard(context, buttonEnabled, RouteInfo route, FoodOrder order, pickOrder, deliverOrder) {
   return Positioned(
     bottom: 0,
     child: Container(

@@ -15,7 +15,7 @@ Widget waitingFragment(context){
           child: Column(
             children: [
               Text(
-                'Waiting for customers',
+                'No Orders',
                 style: TextStyle(
                   color: Clr.green,
                   fontWeight: FontWeight.bold,
@@ -23,7 +23,7 @@ Widget waitingFragment(context){
                 ),
               ),
               Text(
-                "please don't close this screen",
+                "available at this moment",
                 style: TextStyle(
                   color: Clr.green,
                   fontWeight: FontWeight.bold,

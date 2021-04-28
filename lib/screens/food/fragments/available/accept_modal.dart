@@ -1,5 +1,5 @@
 import 'package:driver/api/food_api.dart';
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/screens/food/fragments/available/button.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AcceptModal extends StatelessWidget {
   const AcceptModal({Key key, @required this.order, @required this.onAccept}) : super(key: key);
 
-  final Order order;
+  final FoodOrder order;
   final onAccept;
 
   acceptOrder(context) async {
@@ -49,7 +49,7 @@ class AcceptModal extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                order.address,
+                order.hotel.name,
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),

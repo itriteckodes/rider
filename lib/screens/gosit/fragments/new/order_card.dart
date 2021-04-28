@@ -1,5 +1,4 @@
-import 'package:driver/models/Order.dart';
-import 'package:driver/screens/food/fragments/available/accept_modal.dart';
+import 'package:driver/models/GositOrder.dart';
 import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key key, @required this.order, @required this.onAdd}) : super(key: key);
-  final Order order;
+  final GositOrder order;
   final onAdd;
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  order.address,
+                                  order.name,
                                   style: TextStyle(
                                     color: Clr.silver,
                                     fontSize: Sizer.fontSeven(),
@@ -78,7 +77,7 @@ class OrderCard extends StatelessWidget {
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.destinationDistance.toString() + ' km',
+                                      order.name.toString() + ' km',
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

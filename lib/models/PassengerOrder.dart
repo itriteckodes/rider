@@ -1,12 +1,16 @@
 import 'package:driver/models/Customer.dart';
 import 'package:driver/models/Loc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class PassengerOrder {
   var id, status, name, recepientName, address, size, originDistance, destinationDistance, fare, startedAt, createdAt, vehicleType, customer;
+  var distance;
   Loc originLocation;
   Loc destinationLocation;
+  Position originPosition;
 
   PassengerOrder(order) {
+    distance = 0;
     id = order["id"] ?? "";
     status = order["status"] ?? "";
     name = order["name"] ?? "";
@@ -17,6 +21,7 @@ class PassengerOrder {
     destinationDistance = order["destinationDistance"] ?? "7";
     originLocation = order["origin_location"] != null ? Loc(order["origin_location"]) : "";
     destinationLocation = order["destination_location"] != null ? Loc(order["destination_location"]) : "";
+    originPosition = Position(latitude: originLocation.lat,longitude: originLocation.long);
     fare = order["fare"] ?? "";
     startedAt = order["started_at"] ?? "";
     createdAt = order["created_at"] ?? "";
@@ -42,7 +47,7 @@ class PassengerOrder {
       case "2":
         return 'Picked';
       case "3":
-        return 'Delivered';
+        return 'Completed';
       case "4":
         return 'Canceled';
     }
@@ -52,11 +57,11 @@ class PassengerOrder {
   String getVehicleType() {
     switch (vehicleType) {
       case 1:
-        return 'Bike';
-      case 2:
-        return 'Rikshaw';
-      case 3:
         return 'Car';
+      case 2:
+        return 'Bike';
+      case 3:
+        return 'Rikshaw';
     }
     return 'Unknown Vehicle';
   }

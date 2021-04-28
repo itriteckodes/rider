@@ -1,5 +1,5 @@
-import 'package:driver/api/food_api.dart';
-import 'package:driver/api/parcel_api.dart';
+import 'package:driver/api/passenger_api.dart';
+import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/screens/passenger/fragments/history/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class _HistoryFragmentState extends State<HistoryFragment> {
   }
 
   void fetchOrders() async {
-    var orders = await ParcelApi.orderHistory();
+    List <PassengerOrder> orders = await PassengerApi.orderHistory();
     setState(() {
       _orders = orders;
     });

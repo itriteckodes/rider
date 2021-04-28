@@ -1,5 +1,6 @@
 import 'package:driver/screens/gosit/bottom_navigation.dart';
 import 'package:driver/screens/gosit/fragments/history/history_fragment.dart';
+import 'package:driver/screens/gosit/fragments/map/map_screen.dart';
 import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
 import 'package:driver/screens/gosit/fragments/running/running_fragment.dart';
 import 'package:driver/screens/static/baloon.dart';
@@ -29,22 +30,26 @@ class _GositScreenState extends State<GositScreen> {
       RunningFragment(
         key: _key,
       ),
+      null,
       HistoryFragment(),
     ];
   }
 
   onTapBottomMenu(int index) async {
-    if (index != 0)
-      setState(() {
-        _navigationMenuIndex = index;
-      });
-    else
+    if (index == 0)
       await showDialog(
         context: context,
         builder: (BuildContext context) {
           return NewModal();
         },
       );
+    else if (index == 2)
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
+    else
+      setState(() {
+        _navigationMenuIndex = index;
+      });
+
     _key.currentState.fetchOrders();
   }
 
@@ -81,7 +86,7 @@ class _GositScreenState extends State<GositScreen> {
                             ),
                           ),
                           Text(
-                            'Gosit Orders',
+                            'Ride Orders',
                             style: TextStyle(
                               color: Clr.white,
                               fontSize: Sizer.fontTwo(),

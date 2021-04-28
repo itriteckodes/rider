@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:driver/models/Order.dart';
 import 'package:driver/values/secrets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -10,9 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class HotelMap extends StatefulWidget {
-  HotelMap({Key key, @required this.order}) : super(key: key);
+  HotelMap({Key key}) : super(key: key);
 
-  final Order order;
   @override
   _HotelMapState createState() => _HotelMapState();
 }
@@ -431,6 +428,7 @@ class _HotelMapState extends State<HotelMap> {
                             ),
                           ),
                           SizedBox(height: 5),
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             onPressed: (_startAddress != '' && _destinationAddress != '')
                                 ? () async {

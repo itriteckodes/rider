@@ -1,15 +1,16 @@
 import 'dart:convert';
 
 import 'package:driver/api/food_api.dart';
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/screens/food/fragments/available/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AvailableFragment extends StatefulWidget {
-  AvailableFragment({Key key}) : super(key: key);
+  AvailableFragment({Key key, @required this.switchFragment}) : super(key: key);
 
+  final switchFragment;
   @override
   _AvailableFragmentState createState() => _AvailableFragmentState();
 }
@@ -29,7 +30,8 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     setState(() {
       _orders = [];
     });
-    fetchOrders();
+    // fetchOrders();
+    widget.switchFragment(1);
   }
 
   void fetchOrders() async {
@@ -54,9 +56,9 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   void streamListener(message) {
     var response = jsonDecode(message["data"]["body"].toString());
     if (response["type"] == "newfoodorder") {
-      addToOrders(Order(response));
+      addToOrders(FoodOrder(response));
     } else if (response["type"] == "removefoodorder") {
-      removeFromOrders(Order(response));
+      removeFromOrders(FoodOrder(response));
     }
   }
 

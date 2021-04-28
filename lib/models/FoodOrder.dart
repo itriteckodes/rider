@@ -1,23 +1,23 @@
 import 'package:driver/models/Hotel.dart';
 import 'package:driver/models/Loc.dart';
 
-class Order {
+class FoodOrder {
   var id, name, status, address, hotelDistance, destinationDistance, originAddress, distance, fare, readyAt, startedAt, hotel, createdAt;
   Loc hotelLocation;
   Loc customerLocation;
 
-  Order(order) {
-    id = order["id"] ?? "";
-    status = order["rider_status"] ?? "";
-    name = order["name"] ?? "";
-    address = order["address"] ?? "";
-    createdAt = order["created_at"] ?? "";
-    hotelDistance = order["hotelDistance"] ?? 3;
-    destinationDistance = order["hotelDistance"] ?? 7;
+  FoodOrder(order) {
+    id = order["id"];
+    status = order["rider_status"];
+    name = order["name"];
+    address = order["address"];
+    createdAt = order["created_at"];
+    hotelDistance = order["hotel_distance"];
+    destinationDistance = order["customer_distance"];
     distance = order["distance"] ?? 2;
     originAddress = order["origin_address"] ?? "";
     fare = order["fare"] ?? 0;
-    readyAt = order["readyAt"] ?? "12:45 PM";
+    readyAt = order["dispatch_time"] ?? "12:45 PM";
     startedAt = order["started_at"] ?? "12:45 PM";
     hotelLocation = order["hotel_location"] != null ? Loc(order["hotel_location"]) : "";
     customerLocation = order["customer_location"] != null ? Loc(order["customer_location"]) : "";

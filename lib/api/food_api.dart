@@ -1,7 +1,6 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'package:driver/api/api.dart';
 import 'package:driver/auth/auth.dart';
-import 'package:driver/models/Order.dart';
+import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,16 +14,14 @@ class FoodApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
       List orders = [];
       for (var order in response['orders']) {
-        orders.add(Order(order));
+        orders.add(FoodOrder(order));
       }
       return orders;
     } else {
@@ -40,16 +37,14 @@ class FoodApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
       List orders = [];
       for (var order in response['orders']) {
-        orders.add(Order(order));
+        orders.add(FoodOrder(order));
       }
       return orders;
     } else {
@@ -65,23 +60,21 @@ class FoodApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
       List orders = [];
       for (var order in response['orders']) {
-        orders.add(Order(order));
+        orders.add(FoodOrder(order));
       }
       return orders;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
     }
   }
-
+  
   static acceptOrder(order) async {
     EasyLoading.show();
     var url = Strings.baseUrl + 'food/order/accept';
@@ -90,9 +83,7 @@ class FoodApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -112,14 +103,12 @@ class FoodApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      return Order(response['order']);
+      return FoodOrder(response['order']);
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
       return false;
@@ -134,9 +123,7 @@ class FoodApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 

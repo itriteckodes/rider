@@ -1,11 +1,11 @@
-import 'package:driver/models/ParcelOrder.dart';
+import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/RiderStatus.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-Widget bottomCard(context, buttonEnabled, RouteInfo route, ParcelOrder order, pickOrder, deliverOrder) {
+Widget bottomCard(context, buttonEnabled, RouteInfo route, PassengerOrder order, pickOrder, deliverOrder) {
   return Positioned(
     bottom: 0,
     child: Container(
@@ -21,7 +21,7 @@ Widget bottomCard(context, buttonEnabled, RouteInfo route, ParcelOrder order, pi
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  order.status == RiderStatus.accepted? order.name:order.recepientName,
+                  order.name,
                   style: TextStyle(color: Clr.black, fontSize: Sizer.fontFour(), fontWeight: FontWeight.bold),
                 )
               ],
@@ -71,7 +71,7 @@ Widget bottomCard(context, buttonEnabled, RouteInfo route, ParcelOrder order, pi
                 ),
               ),
               child: Text(
-                order.status == RiderStatus.accepted ? (buttonEnabled ? 'Pick Parcel' : 'Reach Customer') : (buttonEnabled ? 'Deliver Parcel' : 'Reach Destination'),
+                order.status == RiderStatus.accepted ? (buttonEnabled ? 'Pick Passenger' : 'Reach Passenger') : (buttonEnabled ? 'End Ride' : 'Reach Destination'),
                 style: TextStyle(color: Clr.white, fontSize: Sizer.fontFive()),
               ),
             ),

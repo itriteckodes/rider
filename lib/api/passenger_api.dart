@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'package:driver/api/api.dart';
 import 'package:driver/auth/auth.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/values/Strings.dart';
@@ -15,9 +14,7 @@ class PassengerApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -40,9 +37,7 @@ class PassengerApi {
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(data: data, url: url);
 
     EasyLoading.dismiss();
 
@@ -56,21 +51,19 @@ class PassengerApi {
 
   static orderHistory() async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/history';
+    var url = Strings.baseUrl + 'passenger/order/history';
 
     url += '?api_token=' + Auth.user().apiToken;
 
     var data = {};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      List orders = [];
-      for (var order in response['orders']) {
+      List <PassengerOrder> orders = [];
+      for (var order in response['history']) {
         orders.add(PassengerOrder(order));
       }
       return orders;
@@ -87,9 +80,7 @@ class PassengerApi {
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 
@@ -103,20 +94,18 @@ class PassengerApi {
 
   static pickOrder(order) async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/pick';
+    var url = Strings.baseUrl + 'passenger/order/pick';
 
     url += '?api_token=' + Auth.user().apiToken;
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(data: data, url: url);
 
     EasyLoading.dismiss();
 
     if (!response['error']) {
-      return PassengerOrder(response['order']);
+      return true;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
       return false;
@@ -125,15 +114,13 @@ class PassengerApi {
 
   static deliverOrder(order) async {
     EasyLoading.show();
-    var url = Strings.baseUrl + 'parcel/order/deliver';
+    var url = Strings.baseUrl + 'passenger/order/deliver';
 
     url += '?api_token=' + Auth.user().apiToken;
 
     var data = {'order_id': order.id};
 
-    var result = await Dio().post(url, data: data);
-
-    var response = jsonDecode(result.toString());
+    var response = await Api.execute(data: data, url: url);
 
     EasyLoading.dismiss();
 

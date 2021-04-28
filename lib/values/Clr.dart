@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class Clr {
   static var red = fromHex('#9B2420');
   static var blue = fromHex('#1B2E4A');
-  static var green = fromHex('#006A01');
+  static var lightGreen = fromHex('#006A01');
+  static var green = fromHex('#00401A');
   
   static var btnSuccess = fromHex('#7DBE02');
   static var btnWarning = fromHex('#EF7F1A');

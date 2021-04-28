@@ -5,15 +5,17 @@ import 'package:driver/screens/gosit/fragments/running/button.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ShowModal extends StatelessWidget {
   const ShowModal({Key key, @required this.order}) : super(key: key);
 
-  final GositOrder  order;
-
+  final GositOrder order;
 
   finish(context) async {
+    EasyLoading.show();
     await GositApi.finishOrder(await Geo.location(), order);
+    EasyLoading.dismiss();
     Navigator.of(context).pop(true);
   }
 

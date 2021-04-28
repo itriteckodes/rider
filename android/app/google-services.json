@@ -7,9 +7,67 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:880122018533:android:5c02ca38c473834614f20c",
+        "android_client_info": {
+          "package_name": "app.gojak.rider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880122018533-jhgg73uvc070j3qkriot9cb465a9c9d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAREcRIZzegcfwKqajlRE71MJ2aTMfPFsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880122018533-jhgg73uvc070j3qkriot9cb465a9c9d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:880122018533:android:9ded396b53e3c9e814f20c",
         "android_client_info": {
           "package_name": "com.example.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880122018533-jhgg73uvc070j3qkriot9cb465a9c9d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAREcRIZzegcfwKqajlRE71MJ2aTMfPFsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880122018533-jhgg73uvc070j3qkriot9cb465a9c9d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880122018533:android:ba0126d475dfd8f314f20c",
+        "android_client_info": {
+          "package_name": "com.jahan.gojak"
         }
       },
       "oauth_client": [

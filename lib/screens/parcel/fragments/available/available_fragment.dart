@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:driver/api/parcel_api.dart';
-import 'package:driver/models/Order.dart';
 import 'package:driver/models/ParcelOrder.dart';
 import 'package:driver/screens/parcel/fragments/available/order_card.dart';
 import 'package:driver/values/Clr.dart';
