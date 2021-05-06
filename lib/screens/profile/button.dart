@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 Widget button(context, {onPress}) {
   return Container(
-    width: MediaQuery.of(context).size.width * 0.25,
+    width: MediaQuery.of(context).size.width * 0.45,
     height: 45,
     child: ElevatedButton(
       onPressed: () {

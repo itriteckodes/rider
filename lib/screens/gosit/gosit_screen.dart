@@ -86,7 +86,7 @@ class _GositScreenState extends State<GositScreen> {
                             ),
                           ),
                           Text(
-                            'Ride Orders',
+                            'Go Sit Orders',
                             style: TextStyle(
                               color: Clr.white,
                               fontSize: Sizer.fontTwo(),

@@ -2,7 +2,7 @@ import 'package:driver/models/Hotel.dart';
 import 'package:driver/models/Loc.dart';
 
 class FoodOrder {
-  var id, name, status, address, hotelDistance, destinationDistance, originAddress, distance, fare, readyAt, startedAt, hotel, createdAt;
+  var id, name, status, address, hotelDistance, destinationDistance, originAddress, distance, fare, readyAt, startedAt, hotel, createdAt, grandTotal,customerDistance;
   Loc hotelLocation;
   Loc customerLocation;
 
@@ -22,6 +22,8 @@ class FoodOrder {
     hotelLocation = order["hotel_location"] != null ? Loc(order["hotel_location"]) : "";
     customerLocation = order["customer_location"] != null ? Loc(order["customer_location"]) : "";
     hotel = order["hotel"] != null ? Hotel(order["hotel"]) : null;
+    grandTotal = order["grand_total"];
+    customerDistance = order["customer_distance"];
   }
 
   @override

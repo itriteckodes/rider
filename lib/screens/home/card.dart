@@ -3,7 +3,8 @@ import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-Widget card(context, text, icon, onTap) {
+Widget card(context, text, icon ,{onTap, active = true}) {
+  var fontColor = active ? Clr.green : Clr.silver;
   return Container(
     width: MediaQuery.of(context).size.width * 0.95,
     height: 70,
@@ -16,7 +17,8 @@ Widget card(context, text, icon, onTap) {
     ),
     child: ElevatedButton(
       onPressed: () {
-        onTap();
+        if(active)
+          onTap();
       },
       style: ElevatedButton.styleFrom(
         primary: Clr.white,
@@ -35,7 +37,7 @@ Widget card(context, text, icon, onTap) {
               children: [
                 Icon(
                   icon,
-                  color: Clr.green,
+                  color: fontColor,
                   size: Sizer.fontFour(),
                 ),
                 SizedBox(
@@ -44,7 +46,7 @@ Widget card(context, text, icon, onTap) {
                 Text(
                   text,
                   style: TextStyle(
-                    color: Clr.black,
+                    color: fontColor,
                     fontSize: Sizer.fontSix(),
                   ),
                 ),
@@ -52,7 +54,7 @@ Widget card(context, text, icon, onTap) {
             ),
             Icon(
               FontAwesomeIcons.chevronRight,
-              color: Clr.green,
+              color: fontColor,
               size: Sizer.fontFive(),
             )
           ],

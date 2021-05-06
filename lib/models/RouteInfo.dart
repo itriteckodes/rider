@@ -6,7 +6,8 @@ class RouteInfo {
       etaString = route['duration']['text'];
       distanceString = route['distance']['text'];
       eta = route['duration']['value'];
-      distance = (route['distance']['value']/1000).round();
+      distance = num.parse((route['distance']['value']/1000).toStringAsFixed(1));
+ 
     } else {
       etaString = '... min';
       distanceString = '...km';

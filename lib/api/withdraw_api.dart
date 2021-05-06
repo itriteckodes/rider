@@ -1,5 +1,5 @@
 import 'package:driver/api/api.dart';
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/Account.dart';
 import 'package:driver/models/Method.dart';
 import 'package:driver/models/WithdrawRequest.dart';

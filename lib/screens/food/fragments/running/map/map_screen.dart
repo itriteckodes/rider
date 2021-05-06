@@ -3,6 +3,7 @@ import 'package:driver/api/location_api.dart';
 import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
 import 'package:driver/screens/food/fragments/running/map/bottom_card.dart';
+import 'package:driver/screens/food/fragments/running/map/deliver_modal.dart';
 import 'package:driver/screens/food/fragments/running/map/location_button.dart';
 import 'package:driver/screens/food/fragments/running/map/zoom_buttons.dart';
 import 'package:driver/values/Constants.dart';
@@ -57,7 +58,10 @@ class _MapScreenState extends State<MapScreen> {
 
   void deliverOrder() async {
     await FoodApi.deliverOrder(_order);
-    Fluttertoast.showToast(msg: "Order delivered successfuly");
+    await showDialog(
+      context: context,
+      builder: (context) => DeliverModal(order: _order, onAccept: () {}),
+    );
     Navigator.of(context).pop();
   }
 

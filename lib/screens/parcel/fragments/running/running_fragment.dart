@@ -25,6 +25,7 @@ class _RunningFragmentState extends State<RunningFragment> {
     setState(() {
       _orders = orders;
     });
+    if (orders.length == 1) onOrderClick(orders[0]);
   }
 
   onOrderClick(order) async {

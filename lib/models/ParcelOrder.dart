@@ -1,7 +1,7 @@
 import 'package:driver/models/Loc.dart';
 
 class ParcelOrder {
-  var id, status, name, recepientName, address, size, originDistance, destinationDistance, fare, startedAt, createdAt;
+  var id, status, name, recepientName, address, size, originDistance, destinationDistance, fare, startedAt, createdAt, grandTotal;
   Loc originLocation;
   Loc destinationLocation;
 
@@ -9,16 +9,17 @@ class ParcelOrder {
     id = order["id"] ?? "";
     status = order["status"] ?? "";
     name = order["name"] ?? "";
-    recepientName = order["recepientName"] ?? "Recepient";
+    recepientName = order["name"];
     address = order["address"] ?? "";
     size = order["parcel_size"] ?? "";
-    originDistance = order["originDistance"] ?? "7";
-    destinationDistance = order["destinationDistance"] ?? "7";
+    originDistance = order["origin_distance"];
+    destinationDistance = order["distance"];
     originLocation = order["origin_location"] != null ? Loc(order["origin_location"]) : "";
     destinationLocation = order["destination_location"] != null ? Loc(order["destination_location"]) : "";
-    fare = order["fare"] ?? "";
+    fare = order["rider_fare"] ?? "";
     startedAt = order["started_at"] ?? "";
     createdAt = order["created_at"] ?? "";
+    grandTotal = order["fare"];
 
     // createdAt = order["created_at"] ?? "";
     // distance = order["distance"] ?? 2;

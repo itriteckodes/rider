@@ -1,48 +1,50 @@
+import 'package:driver/api/auth_api.dart';
+import 'package:driver/api/status_api.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/helpers/validate.dart';
 import 'package:driver/screens/login/button.dart';
+import 'package:driver/screens/login/forget.dart';
 import 'package:driver/screens/login/input.dart';
 import 'package:driver/screens/login/main_heading.dart';
 import 'package:driver/screens/login/sub_heading.dart';
-import 'package:driver/api/api.dart';
 import 'package:driver/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
   onPressLogin(context) async {
     if (Validate.login(emailController, passwordController)) {
-      var loggedIn = await Api.login(emailController.text, passwordController.text);
-
-      if (loggedIn)
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-      else
-        Fluttertoast.showToast(msg: "Incorrect email or password");
+      if (await AuthApi.login(emailController.text, passwordController.text)) {
+        await StatusApi.online();
+        Auth.save(emailController.text, passwordController.text);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    EasyLoading.dismiss();
-
-    emailController.text = "rider1@mail.com";
-    passwordController.text = "1234";
 
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('lib/assets/images/login_bg.png'),
-              fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/assets/images/login_bg.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -71,6 +73,12 @@ class LoginScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Button(context, onPressLogin, 'SIGN IN'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  forget(onTap: () {
+                    Navigator.popAndPushNamed(context, 'register');
+                  })
                 ],
               ),
             ),

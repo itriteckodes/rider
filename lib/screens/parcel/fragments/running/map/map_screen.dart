@@ -3,6 +3,7 @@ import 'package:driver/api/parcel_api.dart';
 import 'package:driver/models/ParcelOrder.dart';
 import 'package:driver/models/RouteInfo.dart';
 import 'package:driver/screens/parcel/fragments/running/map/bottom_card.dart';
+import 'package:driver/screens/parcel/fragments/running/map/pick_modal.dart';
 import 'package:driver/screens/parcel/fragments/running/map/location_button.dart';
 import 'package:driver/screens/parcel/fragments/running/map/zoom_buttons.dart';
 import 'package:driver/values/Constants.dart';
@@ -50,13 +51,17 @@ class _MapScreenState extends State<MapScreen> {
 
   void pickOrder() async {
     await ParcelApi.pickOrder(_order);
+    await showDialog(
+      context: context,
+      builder: (context) => PickModal(order: _order, onAccept: () {}),
+    );
     Fluttertoast.showToast(msg: "Order picked successfuly");
     Navigator.of(context).pop();
   }
 
   void deliverOrder() async {
-    await ParcelApi.deliverOrder(_order);
-    Fluttertoast.showToast(msg: "Order delivered successfuly");
+    if(await ParcelApi.deliverOrder(_order))
+      Fluttertoast.showToast(msg: "Order delivered successfully");
     Navigator.of(context).pop();
   }
 

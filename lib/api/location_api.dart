@@ -22,6 +22,8 @@ class LocationApi {
         '&key=' +
         Secrets.API_KEY;
 
+    // print('TRITECAPI TestUrl : ' + url + data);
+    
     var result = await Dio().get(url + data);
 
     var response = jsonDecode(result.toString());

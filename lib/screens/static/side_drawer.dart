@@ -1,4 +1,4 @@
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,7 +30,7 @@ Widget SideDrawer(context) {
             thickness: 1,
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.home,color: Clr.green),
+            leading: Icon(FontAwesomeIcons.home, color: Clr.green),
             title: Text('Home'),
             selected: false,
             onTap: () {
@@ -38,7 +38,7 @@ Widget SideDrawer(context) {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.bus,color: Clr.green),
+            leading: Icon(FontAwesomeIcons.bus, color: Clr.green),
             title: Text('Ride'),
             selected: false,
             onTap: () {
@@ -46,7 +46,7 @@ Widget SideDrawer(context) {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.car,color: Clr.green),
+            leading: Icon(FontAwesomeIcons.car, color: Clr.green),
             title: Text('Carry Passenger'),
             selected: false,
             onTap: () {
@@ -54,7 +54,7 @@ Widget SideDrawer(context) {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.pizzaSlice,color: Clr.green),
+            leading: Icon(FontAwesomeIcons.pizzaSlice, color: Clr.green),
             title: Text('Deliver Food'),
             selected: false,
             onTap: () {
@@ -62,7 +62,7 @@ Widget SideDrawer(context) {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.gift,color: Clr.green),
+            leading: Icon(FontAwesomeIcons.gift, color: Clr.green),
             title: Text('Carry Parsel'),
             selected: false,
             onTap: () {
@@ -77,10 +77,13 @@ Widget SideDrawer(context) {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'Driver Managment',
-              style: TextStyle(color: Clr.green,fontWeight: FontWeight.bold,),
+              style: TextStyle(
+                color: Clr.green,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-         ListTile(
+          ListTile(
             leading: Icon(FontAwesomeIcons.wallet, color: Clr.green),
             title: Text('Wallet'),
             selected: false,
@@ -97,7 +100,7 @@ Widget SideDrawer(context) {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.buffer , color: Clr.green),
+            leading: Icon(FontAwesomeIcons.buffer, color: Clr.green),
             title: Text('Transactions'),
             selected: false,
             onTap: () {
@@ -117,6 +120,7 @@ Widget SideDrawer(context) {
             title: Text('Logout'),
             selected: false,
             onTap: () {
+              Auth.logout();
               Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
             },
           ),

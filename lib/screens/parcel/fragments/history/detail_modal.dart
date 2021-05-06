@@ -43,14 +43,6 @@ class DetailModal extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Text(
-                order.address,
-                style: TextStyle(fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 10,
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -128,7 +120,32 @@ class DetailModal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Earned : ',
+                    'Amount : ',
+                    style: TextStyle(
+                      color: Clr.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSix(),
+                    ),
+                  ),
+                  Text(
+                    'PKR '+order.grandTotal.toString()+ '/-',
+                    style: TextStyle(
+                      color: Clr.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSeven(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Earning : ',
                     style: TextStyle(
                       color: Clr.green,
                       fontWeight: FontWeight.bold,

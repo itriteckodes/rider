@@ -19,13 +19,7 @@ class _ParcelScreenState extends State<ParcelScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   int _navigationMenuIndex = 0;
 
-  var _fragments = [
-    AvailableFragment(),
-    RunningFragment(),
-    HistoryFragment(),
-  ];
-
-  onTapBottomMenu(int index) {
+  switchFragment(int index) {
     setState(() {
       _navigationMenuIndex = index;
     });
@@ -33,6 +27,11 @@ class _ParcelScreenState extends State<ParcelScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _fragments = [
+      AvailableFragment(switchFragment: switchFragment),
+      RunningFragment(),
+      HistoryFragment(),
+    ];
     return Scaffold(
       backgroundColor: Clr.grey,
       body: SafeArea(
@@ -80,7 +79,7 @@ class _ParcelScreenState extends State<ParcelScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigation(_navigationMenuIndex, onTapBottomMenu),
+      bottomNavigationBar: BottomNavigation(_navigationMenuIndex, switchFragment),
     );
   }
 }

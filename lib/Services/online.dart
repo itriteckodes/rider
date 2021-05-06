@@ -11,6 +11,6 @@ class OnlineService {
     timer = new Timer.periodic(timePeriod, callback);
   }
   void callback(Timer timer) async {
-    await StatusApi.online();
+    await StatusApi.onlineInBackground();
   }
 }

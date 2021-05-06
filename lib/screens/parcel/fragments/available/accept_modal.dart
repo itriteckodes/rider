@@ -91,7 +91,7 @@ class AcceptModal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    order.originDistance + ' km',
+                    order.originDistance.toString() + ' km',
                     style: TextStyle(
                       color: Clr.black,
                       fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class AcceptModal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    order.destinationDistance + ' km',
+                    order.destinationDistance.toString() + ' km',
                     style: TextStyle(
                       color: Clr.black,
                       fontWeight: FontWeight.bold,

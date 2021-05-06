@@ -1,4 +1,4 @@
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Validate {
@@ -9,6 +9,41 @@ class Validate {
     }
     if (passwordController.text == "") {
       Fluttertoast.showToast(msg: "Please enter password");
+      return false;
+    }
+    return true;
+  }
+  
+  static register(nameController, cnicController, phoneController, emailController, passwordController, confirmPasswordController){
+    if (nameController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter name");
+      return false;
+    }
+    
+    if (cnicController.text.length != 13) {
+      Fluttertoast.showToast(msg: "Cnic must be 13 digits");
+      return false;
+    }
+    
+    if (cnicController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter phone");
+      return false;
+    }
+    
+    if (emailController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter email");
+      return false;
+    }
+    if (passwordController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter password");
+      return false;
+    }
+    if (confirmPasswordController.text == "") {
+      Fluttertoast.showToast(msg: "Please confirm password");
+      return false;
+    }
+    if (confirmPasswordController.text != passwordController.text) {
+      Fluttertoast.showToast(msg: "Please enter same password");
       return false;
     }
     return true;

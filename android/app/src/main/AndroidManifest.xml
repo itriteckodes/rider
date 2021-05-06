@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.driver">
    <application
-        android:label="GoJak Rider"
+        android:label="GoJak Captain"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

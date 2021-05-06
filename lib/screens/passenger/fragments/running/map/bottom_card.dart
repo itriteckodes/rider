@@ -21,7 +21,7 @@ Widget bottomCard(context, buttonEnabled, RouteInfo route, PassengerOrder order,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  order.name,
+                  order.customer.name,
                   style: TextStyle(color: Clr.black, fontSize: Sizer.fontFour(), fontWeight: FontWeight.bold),
                 )
               ],

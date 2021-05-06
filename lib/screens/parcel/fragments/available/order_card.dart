@@ -78,7 +78,7 @@ class OrderCard extends StatelessWidget {
                                       style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
                                     ),
                                     Text(
-                                      order.originDistance + ' km',
+                                      order.originDistance.toString() + ' km',
                                       style: TextStyle(
                                         color: Clr.black,
                                         fontSize: Sizer.fontSeven(),

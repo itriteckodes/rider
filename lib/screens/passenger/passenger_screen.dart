@@ -64,7 +64,7 @@ class _PassengerScreenState extends State<PassengerScreen> {
                           ),
                         ),
                         Text(
-                          'Passengers',
+                          'Ride Orders',
                           style: TextStyle(
                             color: Clr.white,
                             fontSize: Sizer.fontTwo(),

@@ -1,4 +1,5 @@
 // import 'package:driver/Services/online.dart';
+import 'package:driver/Services/online.dart';
 import 'package:driver/screens/food/food_screen.dart';
 import 'package:driver/screens/gosit/gosit_screen.dart';
 import 'package:driver/screens/home/home_screen.dart';
@@ -7,17 +8,41 @@ import 'package:driver/screens/map/map_screen.dart';
 import 'package:driver/screens/parcel/parcel_screen.dart';
 import 'package:driver/screens/passenger/passenger_screen.dart';
 import 'package:driver/screens/profile/profile_screen.dart';
+import 'package:driver/screens/register/register_screen.dart';
+import 'package:driver/screens/splash/splash.dart';
 import 'package:driver/screens/transactions/transaction_screen.dart';
-import 'package:driver/screens/wallet/account_screen.dart';
+import 'package:driver/screens/wallet/wallet_screen.dart';
 import 'package:driver/screens/withdraw/withdraw_screen.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 void main() {
   runApp(MyApp());
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  _firebaseMessaging.configure(
+    onMessage: (message) async {
+      // streamListener(message);
+      FlutterRingtonePlayer.play(
+        android: AndroidSounds.notification,
+        ios: IosSounds.glass,
+        volume: 10,
+      );
+    },
+    onLaunch: (message) async {
+      // streamListener(message);
+    },
+    onResume: (message) async {
+      // streamListener(message);
+    },
+  );
+
   easyLoading();
-  // OnlineService(20000);
+  
+  OnlineService(50000);
 }
 
 void easyLoading() {
@@ -43,10 +68,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gojak Rider',
       home: LoginScreen(),
-      initialRoute: 'login',
+      initialRoute: 'splash',
       builder: EasyLoading.init(),
       theme: ThemeData(),
       routes: {
+        'splash': (context) => SplashScreen(),
+        'register': (context) => RegisterScreen(),
         'login': (context) => LoginScreen(),
         'home': (context) => HomeScreen(),
         'map': (context) => MapScreen(),
@@ -64,3 +91,6 @@ class MyApp extends StatelessWidget {
 }
 
 //12345@HEXONIC@jbg
+//
+//
+//

@@ -1,5 +1,5 @@
 import 'package:driver/api/status_api.dart';
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/screens/home/card.dart';
 import 'package:driver/screens/static/side_drawer.dart';
 import 'package:driver/screens/static/home_baloon.dart';
@@ -125,21 +125,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: MediaQuery.of(context).size.width * 0.015,
                 child: Column(
                   children: [
-                    card(context, 'Ride', FontAwesomeIcons.bus, () {
-                      Navigator.pushNamed(context, 'gosit');
-                    }),
+                    card(
+                      context,
+                      'Go & Sit',
+                      FontAwesomeIcons.bus,
+                      onTap: () {
+                        Navigator.pushNamed(context, 'gosit');
+                      },
+                      active: Auth.user().allowedGosit
+                    ),
                     SizedBox(height: 5),
-                    card(context, 'Carry Passenger', FontAwesomeIcons.car, () {
-                      Navigator.pushNamed(context, 'passenger');
-                    }),
+                    card(
+                      context,
+                      'Ride',
+                      FontAwesomeIcons.car,
+                      onTap: () {
+                        Navigator.pushNamed(context, 'passenger');
+                      },
+                      active: Auth.user().allowedRide
+                    ),
                     SizedBox(height: 5),
-                    card(context, 'Deliver Food', FontAwesomeIcons.pizzaSlice, () {
-                      Navigator.pushNamed(context, 'food');
-                    }),
+                    card(
+                      context,
+                      'Deliver Food',
+                      FontAwesomeIcons.pizzaSlice,
+                      onTap: () {
+                        Navigator.pushNamed(context, 'food');
+                      },
+                      active: Auth.user().allowedFood
+                    ),
                     SizedBox(height: 5),
-                    card(context, 'Deliver Parsel', FontAwesomeIcons.boxOpen, () {
-                      Navigator.pushNamed(context, 'parcel');
-                    }),
+                    card(
+                      context,
+                      'Deliver Parsel',
+                      FontAwesomeIcons.boxOpen,
+                      onTap: () {
+                        Navigator.pushNamed(context, 'parcel');
+                      },
+                      active: Auth.user().allowedParcel
+                    ),
                   ],
                 ),
               ),

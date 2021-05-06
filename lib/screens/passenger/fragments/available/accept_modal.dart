@@ -51,19 +51,7 @@ class AcceptModal extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    order.size,
-                    style: TextStyle(
-                      color: Clr.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizer.fontSeven(),
-                    ),
-                  ),
-                ],
-              ),
+             
               SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -77,7 +65,7 @@ class AcceptModal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    order.originDistance + ' km',
+                    order.distance.toString() + ' km',
                     style: TextStyle(
                       color: Clr.black,
                       fontWeight: FontWeight.bold,
@@ -101,7 +89,29 @@ class AcceptModal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    order.destinationDistance + ' km',
+                    order.destinationDistance.toString() + ' km',
+                    style: TextStyle(
+                      color: Clr.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSeven(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Expected Earning : ',
+                    style: TextStyle(
+                      color: Clr.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSix(),
+                    ),
+                  ),
+                  Text(
+                    'pkr ' + order.fare.toString() + '/-',
                     style: TextStyle(
                       color: Clr.black,
                       fontWeight: FontWeight.bold,

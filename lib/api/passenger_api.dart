@@ -1,5 +1,5 @@
 import 'package:driver/api/api.dart';
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -121,6 +121,26 @@ class PassengerApi {
     var data = {'order_id': order.id};
 
     var response = await Api.execute(data: data, url: url);
+
+    EasyLoading.dismiss();
+
+    if (!response['error']) {
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response['error_data']);
+      return false;
+    }
+  }
+
+  static receiveCash(order, receivedCash) async {
+    EasyLoading.show();
+    var url = Strings.baseUrl + 'passenger/order/recieve/cash';
+
+    url += '?api_token=' + Auth.user().apiToken;
+
+    var data = {'order_id': order.id, 'recieved_cash' : receivedCash};
+
+    var response = await Api.execute(url: url, data: data);
 
     EasyLoading.dismiss();
 

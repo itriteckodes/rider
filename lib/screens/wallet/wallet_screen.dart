@@ -1,3 +1,5 @@
+import 'package:driver/api/wallet_api.dart';
+import 'package:driver/models/Wallet.dart';
 import 'package:driver/screens/wallet/box.dart';
 import 'package:driver/screens/wallet/card.dart';
 import 'package:driver/screens/static/side_drawer.dart';
@@ -16,6 +18,21 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Wallet _wallet;
+
+  fetchWallet() async {
+    Wallet wallet = await WalletApi.get();
+    setState(() {
+      _wallet = wallet;
+    });
+  }
+
+  @override
+  void initState() {
+    fetchWallet();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,14 +106,14 @@ class _WalletScreenState extends State<WalletScreen> {
                     children: [
                       Row(
                         children: [
-                          box(context, 'Avaialble Balance', 'PKR 2500/-', Border(right: BorderSide(color: Clr.green))),
-                          box(context, 'Lifetime Earning', 'PKR 124502/-', Border()),
+                          box(context, 'Avaialble Balance', 'PKR ' + (_wallet!=null?_wallet.balance.toString():"")+'/-', Border(right: BorderSide(color: Clr.green))),
+                          box(context, 'Lifetime Earning', 'PKR ' + (_wallet!=null?_wallet.lifeTimeEarning.toString():"")+'/-', Border()),
                         ],
                       ),
                       Row(
                         children: [
-                          box(context, 'Total Passengers', '7758', Border(right: BorderSide(color: Clr.green), top: BorderSide(color: Clr.green))),
-                          box(context, 'Orders delivered', '931', Border(top: BorderSide(color: Clr.green))),
+                          box(context, 'Total Passengers', (_wallet!=null?_wallet.totalPassengers.toString():""), Border(right: BorderSide(color: Clr.green), top: BorderSide(color: Clr.green))),
+                          box(context, 'Orders delivered', (_wallet!=null?_wallet.ordersDelivered.toString():""), Border(top: BorderSide(color: Clr.green))),
                         ],
                       ),
                     ],

@@ -1,5 +1,5 @@
 import 'package:driver/api/food_api.dart';
-import 'package:driver/screens/parcel/fragments/history/order_card.dart';
+import 'package:driver/screens/food/fragments/history/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 

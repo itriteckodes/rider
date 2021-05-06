@@ -4,7 +4,6 @@ import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-
 class DetailModal extends StatelessWidget {
   const DetailModal({
     Key key,
@@ -34,7 +33,7 @@ class DetailModal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                order.name,
+                order.customer.name,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -44,37 +43,12 @@ class DetailModal extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                order.address,
+                order.customer.address,
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'Parcel : ',
-                    style: TextStyle(
-                      color: Clr.green,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizer.fontSix(),
-                    ),
-                  ),
-                  Text(
-                    order.size,
-                    style: TextStyle(
-                      color: Clr.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizer.fontSeven(),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
+              SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -96,9 +70,7 @@ class DetailModal extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -120,10 +92,29 @@ class DetailModal extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
+              SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Amount : ',
+                    style: TextStyle(
+                      color: Clr.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSix(),
+                    ),
+                  ),
+                  Text(
+                    'PKR ' + order.grandTotal.toString() + '/-',
+                    style: TextStyle(
+                      color: Clr.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizer.fontSeven(),
+                    ),
+                  ),
+                ],
               ),
-              
+              SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -136,7 +127,7 @@ class DetailModal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'PKR '+order.fare.toString()+ '/-',
+                    'PKR ' + order.fare.toString() + '/-',
                     style: TextStyle(
                       color: Clr.black,
                       fontWeight: FontWeight.bold,
@@ -169,7 +160,9 @@ class DetailModal extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

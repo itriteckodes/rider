@@ -1,5 +1,5 @@
 import 'package:driver/api/api.dart';
-import 'package:driver/auth/auth.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/GositOrder.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

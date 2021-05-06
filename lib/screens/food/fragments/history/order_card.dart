@@ -1,12 +1,12 @@
-import 'package:driver/models/ParcelOrder.dart';
-import 'package:driver/screens/parcel/fragments/history/detail_modal.dart';
+import 'package:driver/models/FoodOrder.dart';
+import 'package:driver/screens/food/fragments/history/detail_modal.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key key, @required this.order}) : super(key: key);
-  final ParcelOrder order;
+  final FoodOrder order;
   @override
   Widget build(BuildContext context) {
     return Row(

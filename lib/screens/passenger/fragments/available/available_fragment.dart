@@ -93,7 +93,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   _initPostions() async {
-    _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     runLocationService();
   }
 

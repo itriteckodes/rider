@@ -8,8 +8,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AvailableFragment extends StatefulWidget {
-  AvailableFragment({Key key}) : super(key: key);
+  AvailableFragment({Key key, @required this.switchFragment}) : super(key: key);
 
+  final switchFragment;
   @override
   _AvailableFragmentState createState() => _AvailableFragmentState();
 }
@@ -29,7 +30,8 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     setState(() {
       _orders = [];
     });
-    fetchOrders();
+    // fetchOrders();
+    widget.switchFragment(1);
   }
 
   void fetchOrders() async {
