@@ -10,6 +10,7 @@ import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 
 class AccountFragment extends StatefulWidget {
   AccountFragment({Key key, @required this.switchFragment}) : super(key: key);
@@ -38,15 +39,13 @@ class _AccountFragmentState extends State<AccountFragment> {
   }
 
   imgFromCamera() async {
-    // ignore: deprecated_member_use
-    File image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
-    setImage(image);
+    PickedFile file = await ImagePicker().getImage(source: ImageSource.camera, imageQuality: 50);
+    setImage(File(file.path));
   }
 
   imgFromGallery() async {
-    // ignore: deprecated_member_use
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-    setImage(image);
+    PickedFile file = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
+    setImage(File(file.path));
   }
 
   setImage(image) {

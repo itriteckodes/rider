@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:driver/helpers/url.dart';
+// import 'package:driver/helpers/url.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Api {
@@ -13,8 +13,8 @@ class Api {
       var response = jsonDecode(result.toString());
       // print('TRITECAPI Url : ' + url.toString());
       // print('TRITECAPI Data : ' + data.toString());
-      print('TRITECAPI TestUrl : ' + url+URL.toGetString(data));
-      print('TRITECAPI Result : ' + result.toString());
+      // print('TRITECAPI TestUrl : ' + url+URL.toGetString(data));
+      // print('TRITECAPI Result : ' + result.toString());
       return response;
     } on DioError catch (e) {
       EasyLoading.dismiss();

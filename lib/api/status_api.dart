@@ -1,6 +1,7 @@
 import 'package:driver/api/api.dart';
 import 'package:driver/helpers/auth.dart';
 import 'package:driver/helpers/location.dart';
+import 'package:driver/models/Ram.dart';
 import 'package:driver/models/User.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class StatusApi {
   static online() async {
+    Ram.onlineChoice = true;
     EasyLoading.show();
     var url = Strings.baseUrl + 'status/online';
 
@@ -15,8 +17,8 @@ class StatusApi {
 
     var location = await Geo.location();
 
-    var data = {'location' : location.latitude.toString() + ','+ location.longitude.toString()};
-    
+    var data = {'location': location.latitude.toString() + ',' + location.longitude.toString()};
+
     var response = await Api.execute(data: data, url: url);
 
     EasyLoading.dismiss();
@@ -28,16 +30,20 @@ class StatusApi {
       return false;
     }
   }
-  
+
   static onlineInBackground() async {
-    var url = Strings.baseUrl + 'status/online';
+    var url;
+    if (Ram.onlineChoice)
+      url = Strings.baseUrl + 'status/online';
+    else
+      url = Strings.baseUrl + 'status/offline';
 
     url += '?api_token=' + Auth.user().apiToken;
 
     var location = await Geo.location();
 
-    var data = {'location' : location.latitude.toString() + ','+ location.longitude.toString()};
-    
+    var data = {'location': location.latitude.toString() + ',' + location.longitude.toString()};
+
     var response = await Api.execute(data: data, url: url);
 
     if (!response['error']) {
@@ -50,6 +56,7 @@ class StatusApi {
   }
 
   static offline() async {
+    Ram.onlineChoice = false;
     EasyLoading.show();
     var url = Strings.baseUrl + 'status/offline';
 
@@ -58,7 +65,7 @@ class StatusApi {
     var data = {};
 
     var response = await Api.execute(data: data, url: url);
-    
+
     EasyLoading.dismiss();
     if (!response['error']) {
       Auth.login(User(response));

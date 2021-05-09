@@ -137,9 +137,9 @@ class _MapScreenState extends State<MapScreen> {
         // instead of the address if the start position is user's
         // current position, as it results in better accuracy.
         Position startCoordinates = _startAddress == _currentAddress
-            ? Position(latitude: _currentPosition.latitude, longitude: _currentPosition.longitude)
-            : Position(latitude: startPlacemark[0].latitude, longitude: startPlacemark[0].longitude);
-        Position destinationCoordinates = Position(latitude: destinationPlacemark[0].latitude, longitude: destinationPlacemark[0].longitude);
+            ? Position(latitude: _currentPosition.latitude, longitude: _currentPosition.longitude, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0)
+            : Position(latitude: startPlacemark[0].latitude, longitude: startPlacemark[0].longitude, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+        Position destinationCoordinates = Position(latitude: destinationPlacemark[0].latitude, longitude: destinationPlacemark[0].longitude, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
 
         // Start Location Marker
         Marker startMarker = Marker(
@@ -186,8 +186,8 @@ class _MapScreenState extends State<MapScreen> {
         double maxy = (startCoordinates.latitude <= destinationCoordinates.latitude) ? destinationCoordinates.latitude : startCoordinates.latitude;
         double maxx = (startCoordinates.longitude <= destinationCoordinates.longitude) ? destinationCoordinates.longitude : startCoordinates.longitude;
 
-        _southwestCoordinates = Position(latitude: miny, longitude: minx);
-        _northeastCoordinates = Position(latitude: maxy, longitude: maxx);
+        _southwestCoordinates = Position(latitude: miny, longitude: minx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+        _northeastCoordinates = Position(latitude: maxy, longitude: maxx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
 
         // Accommodate the two locations within the
         // camera view of the map

@@ -14,14 +14,13 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  void gotoNextScreen() async{
-    var pass = Auth.check();
-    // Future.delayed(Duration(seconds: 1, milliseconds: 0), () async {
-      if (await Auth.check())
-        Navigator.popAndPushNamed(context, 'home');
-      else
-        Navigator.popAndPushNamed(context, 'login');
-    // });
+  void gotoNextScreen() async {
+      Future.delayed(Duration(seconds: 2, milliseconds: 0), () async {      
+        if (await Auth.check())
+          Navigator.popAndPushNamed(context, 'home');
+        else
+          Navigator.popAndPushNamed(context, 'login');
+      });
   }
 
   @override

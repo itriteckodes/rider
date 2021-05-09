@@ -20,7 +20,7 @@ Widget SideDrawer(context) {
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
               child: Text(
-                "R",
+                "C",
                 style: TextStyle(fontSize: 40.0, color: Clr.green),
               ),
             ),

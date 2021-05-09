@@ -1,5 +1,4 @@
 // import 'package:driver/Services/online.dart';
-import 'package:driver/Services/online.dart';
 import 'package:driver/screens/food/food_screen.dart';
 import 'package:driver/screens/gosit/gosit_screen.dart';
 import 'package:driver/screens/home/home_screen.dart';
@@ -16,33 +15,28 @@ import 'package:driver/screens/withdraw/withdraw_screen.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 void main() {
   runApp(MyApp());
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  _firebaseMessaging.configure(
-    onMessage: (message) async {
-      // streamListener(message);
-      FlutterRingtonePlayer.play(
-        android: AndroidSounds.notification,
-        ios: IosSounds.glass,
-        volume: 10,
-      );
-    },
-    onLaunch: (message) async {
-      // streamListener(message);
-    },
-    onResume: (message) async {
-      // streamListener(message);
-    },
-  );
+  Firebase.initializeApp();
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FlutterRingtonePlayer.play(
+      android: AndroidSounds.notification,
+      ios: IosSounds.glass,
+      volume: 10,
+    );
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
 
   easyLoading();
-  
-  OnlineService(50000);
 }
 
 void easyLoading() {
@@ -91,6 +85,3 @@ class MyApp extends StatelessWidget {
 }
 
 //12345@HEXONIC@jbg
-//
-//
-//

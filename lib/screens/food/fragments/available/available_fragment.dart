@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:driver/api/food_api.dart';
+import 'package:driver/helpers/text_helper.dart';
 import 'package:driver/models/FoodOrder.dart';
 import 'package:driver/screens/food/fragments/available/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AvailableFragment extends StatefulWidget {
@@ -16,7 +18,6 @@ class AvailableFragment extends StatefulWidget {
 }
 
 class _AvailableFragmentState extends State<AvailableFragment> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   List _orders = [];
 
   @override
@@ -54,7 +55,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   void streamListener(message) {
-    var response = jsonDecode(message["data"]["body"].toString());
+    var response = jsonDecode(message);
     if (response["type"] == "newfoodorder") {
       addToOrders(FoodOrder(response));
     } else if (response["type"] == "removefoodorder") {
@@ -63,17 +64,9 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   void startListener() {
-    _firebaseMessaging.configure(
-      onMessage: (message) async {
-        streamListener(message);
-      },
-      onLaunch: (message) async {
-        streamListener(message);
-      },
-      onResume: (message) async {
-        streamListener(message);
-      },
-    );
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      streamListener(TextHelper.firebase(message));
+    });
   }
 
   @override

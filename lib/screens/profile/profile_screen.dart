@@ -52,15 +52,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int selectedVehicle;
 
   imgFromCamera() async {
-    // ignore: deprecated_member_use
-    File image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
-    setImage(image);
+    PickedFile file = await ImagePicker().getImage(source: ImageSource.camera, imageQuality: 50);
+    setImage(File(file.path));
   }
 
   imgFromGallery() async {
-    // ignore: deprecated_member_use
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-    setImage(image);
+    PickedFile file = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
+    setImage(File(file.path));
   }
 
   setImage(image) {

@@ -21,7 +21,7 @@ class PassengerOrder {
     destinationDistance = order["distance"];
     originLocation = order["origin_location"] != null ? Loc(order["origin_location"]) : "";
     destinationLocation = order["destination_location"] != null ? Loc(order["destination_location"]) : "";
-    originPosition = Position(latitude: originLocation.lat,longitude: originLocation.long);
+    originPosition = Position(latitude: originLocation.lat,longitude: originLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
     fare = order["rider_fare"] ?? "";
     grandTotal = order["fare"] ?? "";
     startedAt = order["started_at"] ?? "";

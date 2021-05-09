@@ -82,8 +82,8 @@ class _MapScreenState extends State<MapScreen> {
     double maxy = (_currentPosition.latitude <= _destinationPosition.latitude) ? _destinationPosition.latitude : _currentPosition.latitude;
     double maxx = (_currentPosition.longitude <= _destinationPosition.longitude) ? _destinationPosition.longitude : _currentPosition.longitude;
 
-    _southwestCoordinates = Position(latitude: miny, longitude: minx);
-    _northeastCoordinates = Position(latitude: maxy, longitude: maxx);
+    _southwestCoordinates = Position(latitude: miny, longitude: minx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+    _northeastCoordinates = Position(latitude: maxy, longitude: maxx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
 
     _mapController.animateCamera(
       CameraUpdate.newLatLngBounds(
@@ -130,7 +130,7 @@ class _MapScreenState extends State<MapScreen> {
     locationSubscription = location.onLocationChanged.listen((locationData) {
       if (locationData != null) {
         setState(() {
-          _currentPosition = Position(latitude: locationData.latitude, longitude: locationData.longitude);
+          _currentPosition = Position(latitude: locationData.latitude, longitude: locationData.longitude, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
         });
         getRouteInfo();
       }
@@ -150,9 +150,9 @@ class _MapScreenState extends State<MapScreen> {
 
   _initPostions() async {
     if (_order.status == RiderStatus.accepted)
-      _destinationPosition = Position(latitude: _order.hotelLocation.lat, longitude: _order.hotelLocation.long);
+      _destinationPosition = Position(latitude: _order.hotelLocation.lat, longitude: _order.hotelLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
     else
-      _destinationPosition = Position(latitude: _order.customerLocation.lat, longitude: _order.customerLocation.long);
+      _destinationPosition = Position(latitude: _order.customerLocation.lat, longitude: _order.customerLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
 
     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     markers.add(getDestinationMaker());

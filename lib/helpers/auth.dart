@@ -1,7 +1,8 @@
+import 'package:driver/Services/online.dart';
 import 'package:driver/api/auth_api.dart';
 import 'package:driver/models/Ram.dart';
 import 'package:driver/models/User.dart';
-import 'package:flutter_session/flutter_session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
   static User user() {
@@ -13,29 +14,33 @@ class Auth {
   }
 
   static Future save(email, password) async {
-    var session = FlutterSession();
-    session.set('email', email);
-    session.set('password', password);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', email);
+    prefs.setString('password', password);
   }
 
   static oldEmail() async {
-    var session = FlutterSession();
-    return await session.get('email') ?? "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('email') ?? "";
   }
-  
+
   static oldPassword() async {
-    var session = FlutterSession();
-    return await session.get('password') ?? "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('password') ?? "";
   }
 
   static check() async {
-    var session = FlutterSession();
-    return await AuthApi.secretLogin(await session.get('email'), await session.get('password'));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email');
+    String password = prefs.getString('password');
+    if (email == null || password == null) return false;
+    return await AuthApi.secretLogin(email, password);
   }
 
   static Future logout() async {
-    var session = FlutterSession();
-    await session.set('password', "");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('password');
     Ram.user = null;
+    OnlineService.cancel();
   }
 }

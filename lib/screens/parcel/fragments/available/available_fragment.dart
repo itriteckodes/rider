@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:driver/api/parcel_api.dart';
+import 'package:driver/helpers/text_helper.dart';
 import 'package:driver/models/ParcelOrder.dart';
 import 'package:driver/screens/parcel/fragments/available/order_card.dart';
 import 'package:driver/values/Clr.dart';
@@ -16,7 +17,6 @@ class AvailableFragment extends StatefulWidget {
 }
 
 class _AvailableFragmentState extends State<AvailableFragment> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   List _orders = [];
 
   @override
@@ -54,7 +54,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   void streamListener(message) {
-    var response = jsonDecode(message["data"]["body"].toString());
+    var response = jsonDecode(message);
     if (response["type"] == "newparcelorder") {
       addToOrders(ParcelOrder(response));
     } else if (response["type"] == "removeparcelorder") {
@@ -63,17 +63,9 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   void startListener() {
-    _firebaseMessaging.configure(
-      onMessage: (message) async {
-        streamListener(message);
-      },
-      onLaunch: (message) async {
-        streamListener(message);
-      },
-      onResume: (message) async {
-        streamListener(message);
-      },
-    );
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      streamListener(TextHelper.firebase(message));
+    });
   }
 
   @override
