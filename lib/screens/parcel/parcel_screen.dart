@@ -1,3 +1,4 @@
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/screens/parcel/bottom_navigation.dart';
 import 'package:driver/screens/parcel/fragments/available/available_fragment.dart';
 import 'package:driver/screens/parcel/fragments/running/running_fragment.dart';
@@ -10,7 +11,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ParcelScreen extends StatefulWidget {
   ParcelScreen({Key key}) : super(key: key);
-
   @override
   _ParcelScreenState createState() => _ParcelScreenState();
 }
@@ -26,10 +26,18 @@ class _ParcelScreenState extends State<ParcelScreen> {
   }
 
   @override
+  void initState() {
+    if (Auth.user().mode == 'parcel') {
+      _navigationMenuIndex = 1;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var _fragments = [
       AvailableFragment(switchFragment: switchFragment),
-      RunningFragment(),
+      RunningFragment(switchFragment: switchFragment),
       HistoryFragment(),
     ];
     return Scaffold(

@@ -1,7 +1,7 @@
 class User {
   var name, email, phone, address, apiToken, firebaseToken, balance, allowedGosit, allowedRide, allowedFood, allowedParcel;
   bool approved;
-  var vehicleType;
+  var vehicleType , mode;
   var cnic;
   var online;
   var dob;
@@ -39,6 +39,7 @@ class User {
     cnicBackImage = user['cnicback'];
     dirvingLicense = user['driving_license'];
     comment = user['comment'];
+    mode = user['mode'];
   }
 
   @override

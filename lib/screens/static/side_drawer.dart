@@ -18,10 +18,11 @@ Widget SideDrawer(context) {
             accountName: Text(Auth.user().name),
             accountEmail: Text(Auth.user().email),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                "C",
-                style: TextStyle(fontSize: 40.0, color: Clr.green),
+              backgroundColor: Colors.transparent,
+              radius: 45,
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(45)),
+                child: Image.network(Auth.user().profileImage),
               ),
             ),
           ),
@@ -36,52 +37,6 @@ Widget SideDrawer(context) {
             onTap: () {
               Navigator.popAndPushNamed(context, 'home');
             },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.bus, color: Clr.green),
-            title: Text('Ride'),
-            selected: false,
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'gosit');
-            },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.car, color: Clr.green),
-            title: Text('Carry Passenger'),
-            selected: false,
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'passenger');
-            },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.pizzaSlice, color: Clr.green),
-            title: Text('Deliver Food'),
-            selected: false,
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'food');
-            },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.gift, color: Clr.green),
-            title: Text('Carry Parsel'),
-            selected: false,
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'parcel');
-            },
-          ),
-          Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Driver Managment',
-              style: TextStyle(
-                color: Clr.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.wallet, color: Clr.green),

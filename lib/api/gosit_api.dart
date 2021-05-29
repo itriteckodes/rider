@@ -1,6 +1,7 @@
 import 'package:driver/api/api.dart';
 import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/GositOrder.dart';
+import 'package:driver/models/User.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -69,6 +70,7 @@ class GositApi {
 
     if (!response['error']) {
       Fluttertoast.showToast(msg: 'Order started');
+      Auth.login(User(response));
       return true;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
@@ -103,6 +105,7 @@ class GositApi {
 
     if (!response['error']) {
       Fluttertoast.showToast(msg: 'Order finished');
+      Auth.login(User(response));
       return GositOrder(response['order']);
     } else {
       Fluttertoast.showToast(msg: response['error_data']);

@@ -1,5 +1,6 @@
 import 'package:driver/api/passenger_api.dart';
 import 'package:driver/models/PassengerOrder.dart';
+import 'package:driver/screens/passenger/fragments/history/no_order_framgent.dart';
 import 'package:driver/screens/passenger/fragments/history/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class HistoryFragment extends StatefulWidget {
 
 class _HistoryFragmentState extends State<HistoryFragment> {
   List _orders = [];
-  
+  bool firstCall = true;
+
   @override
   void initState() {
     super.initState();
@@ -24,12 +26,22 @@ class _HistoryFragmentState extends State<HistoryFragment> {
     List <PassengerOrder> orders = await PassengerApi.orderHistory();
     setState(() {
       _orders = orders;
+      firstCall = false;
     });
+  }
+
+  noOrdersAvailable() {
+    if (_orders.length < 1 && !firstCall)
+      return true;
+    else
+      return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return noOrdersAvailable()
+        ? noOrderFragment(context)
+        :Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
       height: MediaQuery.of(context).size.height * 0.76,

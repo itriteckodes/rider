@@ -2,7 +2,7 @@ import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-Widget waitingFragment(context){
+Widget noOrderFragment(context){
   return Container(
     width: MediaQuery.of(context).size.width * 0.9,
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),

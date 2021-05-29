@@ -13,6 +13,8 @@ class StatusApi {
     EasyLoading.show();
     var url = Strings.baseUrl + 'status/online';
 
+    print('ONline Started');
+
     url += '?api_token=' + Auth.user().apiToken;
 
     var location = await Geo.location();
@@ -20,6 +22,32 @@ class StatusApi {
     var data = {'location': location.latitude.toString() + ',' + location.longitude.toString()};
 
     var response = await Api.execute(data: data, url: url);
+    print('ONline Ended');
+
+    EasyLoading.dismiss();
+    if (!response['error']) {
+      Auth.login(User(response));
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response['error_data']);
+      return false;
+    }
+  }
+
+  static offline() async {
+    Ram.onlineChoice = false;
+    EasyLoading.show();
+    print('Offline Started');
+
+    var url = Strings.baseUrl + 'status/offline';
+
+    url += '?api_token=' + Auth.user().apiToken;
+
+    var data = {};
+
+    var response = await Api.execute(data: data, url: url);
+
+    print('Offline Ended');
 
     EasyLoading.dismiss();
     if (!response['error']) {
@@ -46,27 +74,6 @@ class StatusApi {
 
     var response = await Api.execute(data: data, url: url);
 
-    if (!response['error']) {
-      Auth.login(User(response));
-      return true;
-    } else {
-      Fluttertoast.showToast(msg: response['error_data']);
-      return false;
-    }
-  }
-
-  static offline() async {
-    Ram.onlineChoice = false;
-    EasyLoading.show();
-    var url = Strings.baseUrl + 'status/offline';
-
-    url += '?api_token=' + Auth.user().apiToken;
-
-    var data = {};
-
-    var response = await Api.execute(data: data, url: url);
-
-    EasyLoading.dismiss();
     if (!response['error']) {
       Auth.login(User(response));
       return true;

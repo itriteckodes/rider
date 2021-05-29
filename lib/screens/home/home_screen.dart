@@ -1,10 +1,12 @@
 import 'package:driver/api/status_api.dart';
 import 'package:driver/helpers/auth.dart';
+import 'package:driver/main.dart';
 import 'package:driver/screens/home/card.dart';
 import 'package:driver/screens/static/side_drawer.dart';
 import 'package:driver/screens/static/home_baloon.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -15,15 +17,50 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with RouteAware {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  changeOnlineStatus() async {
-    if (Auth.user().online)
+  bool online;
+
+  changeOnlineStatus(value) async {
+    if (online) {
+      setState(() {
+        online = false;
+      });
       await StatusApi.offline();
-    else
+    } else {
+      setState(() {
+        online = true;
+      });
       await StatusApi.online();
+    }
     setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context));
+  }
+
+  @override
+  void dispose() {  
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    final route = ModalRoute.of(context).settings.name;
+    if (route == 'home') {
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    online = Auth.user().online;
+    super.initState();
   }
 
   @override
@@ -72,9 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () {
-                            changeOnlineStatus();
-                          },
                           child: Ink(
                             child: Container(
                               child: Text(
@@ -86,6 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                          child: Switch(
+                            value: online,
+                            onChanged: changeOnlineStatus,
+                            activeColor: Clr.white,
+                            inactiveThumbColor: Clr.white,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                         ),
                         SizedBox(width: 10),
@@ -125,45 +169,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: MediaQuery.of(context).size.width * 0.015,
                 child: Column(
                   children: [
-                    card(
-                      context,
-                      'Go & Sit',
-                      FontAwesomeIcons.bus,
-                      onTap: () {
-                        Navigator.pushNamed(context, 'gosit');
-                      },
-                      active: Auth.user().allowedGosit
-                    ),
+                    card(context, 'Go & Sit', FontAwesomeIcons.bus, onTap: () {
+                      Navigator.pushNamed(context, 'gosit');
+                    }, active: Auth.user().allowedGosit),
                     SizedBox(height: 5),
-                    card(
-                      context,
-                      'Ride',
-                      FontAwesomeIcons.car,
-                      onTap: () {
-                        Navigator.pushNamed(context, 'passenger');
-                      },
-                      active: Auth.user().allowedRide
-                    ),
+                    card(context, 'Ride', FontAwesomeIcons.car, onTap: () {
+                      Navigator.pushNamed(context, 'passenger');
+                    }, active: Auth.user().allowedRide),
                     SizedBox(height: 5),
-                    card(
-                      context,
-                      'Deliver Food',
-                      FontAwesomeIcons.pizzaSlice,
-                      onTap: () {
-                        Navigator.pushNamed(context, 'food');
-                      },
-                      active: Auth.user().allowedFood
-                    ),
+                    card(context, 'Deliver Food', FontAwesomeIcons.pizzaSlice, onTap: () {
+                      Navigator.pushNamed(context, 'food');
+                    }, active: Auth.user().allowedFood),
                     SizedBox(height: 5),
-                    card(
-                      context,
-                      'Deliver Parsel',
-                      FontAwesomeIcons.boxOpen,
-                      onTap: () {
-                        Navigator.pushNamed(context, 'parcel');
-                      },
-                      active: Auth.user().allowedParcel
-                    ),
+                    card(context, 'Deliver Parsel', FontAwesomeIcons.boxOpen, onTap: () {
+                      Navigator.pushNamed(context, 'parcel');
+                    }, active: Auth.user().allowedParcel),
                   ],
                 ),
               ),

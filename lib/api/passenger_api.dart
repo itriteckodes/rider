@@ -1,6 +1,7 @@
 import 'package:driver/api/api.dart';
 import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/PassengerOrder.dart';
+import 'package:driver/models/User.dart';
 import 'package:driver/values/Strings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -85,6 +86,7 @@ class PassengerApi {
     EasyLoading.dismiss();
 
     if (!response['error']) {
+      Auth.login(User(response));
       return true;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
@@ -125,6 +127,7 @@ class PassengerApi {
     EasyLoading.dismiss();
 
     if (!response['error']) {
+      Auth.login(User(response));
       return true;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);

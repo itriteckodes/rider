@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:driver/api/parcel_api.dart';
 import 'package:driver/helpers/text_helper.dart';
 import 'package:driver/models/ParcelOrder.dart';
+import 'package:driver/screens/parcel/fragments/available/no_order_framgent.dart';
 import 'package:driver/screens/parcel/fragments/available/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -19,6 +20,8 @@ class AvailableFragment extends StatefulWidget {
 class _AvailableFragmentState extends State<AvailableFragment> {
   List _orders = [];
 
+  bool firstCall = true;
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +33,6 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     setState(() {
       _orders = [];
     });
-    // fetchOrders();
     widget.switchFragment(1);
   }
 
@@ -38,6 +40,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     var orders = await ParcelApi.availableOrders();
     setState(() {
       _orders = orders;
+      firstCall = false;
     });
   }
 
@@ -68,9 +71,18 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     });
   }
 
+  noOrdersAvailable() {
+    if (_orders.length < 1 && !firstCall)
+      return true;
+    else
+      return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return noOrdersAvailable()
+        ? noOrderFragment(context)
+        :Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
       height: MediaQuery.of(context).size.height * 0.76,

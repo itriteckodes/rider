@@ -115,6 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     nameController.text = Auth.user().name;
     cnicController.text = Auth.user().cnic;
     emailController.text = Auth.user().email;
@@ -127,13 +129,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     modelNoController.text = Auth.user().vehicleModelNo;
     vehicleColorController.text = Auth.user().vehicleColor;
 
-    super.initState();
   }
 
   DateTime selectedDate = DateTime.now();
 
   _onSelectDate(controller) async {
-    final DateTime picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
+    final DateTime picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(1950, 1), lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;

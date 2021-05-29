@@ -12,9 +12,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AuthApi {
   static login(email, password) async {
     EasyLoading.show();
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-    var token = await _firebaseMessaging.getToken();
+    
+    var token = await FirebaseMessaging.instance.getToken();
 
     var url = Strings.baseUrl + 'login';
 
@@ -36,9 +35,7 @@ class AuthApi {
   }
 
   static secretLogin(email, password) async {
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-    var token = await _firebaseMessaging.getToken();
+    var token = await FirebaseMessaging.instance.getToken();
 
     var url = Strings.baseUrl + 'login';
 

@@ -1,4 +1,4 @@
-// import 'package:driver/Services/online.dart';
+import 'package:flutter/material.dart';
 import 'package:driver/screens/food/food_screen.dart';
 import 'package:driver/screens/gosit/gosit_screen.dart';
 import 'package:driver/screens/home/home_screen.dart';
@@ -12,49 +12,13 @@ import 'package:driver/screens/splash/splash.dart';
 import 'package:driver/screens/transactions/transaction_screen.dart';
 import 'package:driver/screens/wallet/wallet_screen.dart';
 import 'package:driver/screens/withdraw/withdraw_screen.dart';
-import 'package:driver/values/Clr.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 void main() {
   runApp(MyApp());
-
-  Firebase.initializeApp();
-
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    FlutterRingtonePlayer.play(
-      android: AndroidSounds.notification,
-      ios: IosSounds.glass,
-      volume: 10,
-    );
-  });
-
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-    });
-
-  easyLoading();
 }
 
-void easyLoading() {
-  EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.doubleBounce
-    ..loadingStyle = EasyLoadingStyle.custom
-    ..indicatorSize = 90.0
-    ..radius = 10.0
-    ..progressColor = Colors.white
-    ..backgroundColor = Colors.transparent
-    ..indicatorColor = Clr.green
-    ..textColor = Clr.green
-    ..maskColor = Colors.blue.withOpacity(0.5)
-    ..userInteractions = true
-    ..dismissOnTap = false;
-  // ..customAnimation = customAnimation();
-}
+RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -65,6 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'splash',
       builder: EasyLoading.init(),
       theme: ThemeData(),
+      navigatorObservers: [routeObserver],
       routes: {
         'splash': (context) => SplashScreen(),
         'register': (context) => RegisterScreen(),
@@ -85,3 +50,5 @@ class MyApp extends StatelessWidget {
 }
 
 //12345@HEXONIC@jbg
+//@JAK@jbg@12345
+//215

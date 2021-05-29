@@ -76,7 +76,7 @@ class _GositScreenState extends State<GositScreen> {
                             padding: const EdgeInsets.only(left: 2.0, right: 10.0),
                             child: InkWell(
                               onTap: () {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               },
                               child: Icon(
                                 FontAwesomeIcons.chevronCircleLeft,

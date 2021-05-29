@@ -58,12 +58,16 @@ class PassengerOrder {
   String getVehicleType() {
     switch (vehicleType) {
       case 1:
-        return 'Car';
+        return 'Luxury Car';
       case 2:
-        return 'Bike';
+        return 'Ac Car';
       case 3:
+        return 'Non Ac Car';
+      case 4:
+        return 'Bike';
+      case 5:
         return 'Rikshaw';
     }
-    return 'Unknown Vehicle';
+    return 'Undefined Vehicle';
   }
 }

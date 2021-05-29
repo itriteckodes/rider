@@ -52,8 +52,8 @@ class _MapScreenState extends State<MapScreen> {
 
   void pickOrder() async {
     await FoodApi.pickOrder(_order);
-    Fluttertoast.showToast(msg: "Order picked successfuly");
-    Navigator.of(context).pop();
+    Fluttertoast.showToast(msg: "Food Order picked successfuly");
+    Navigator.of(context).pop("picked");
   }
 
   void deliverOrder() async {
@@ -62,7 +62,7 @@ class _MapScreenState extends State<MapScreen> {
       context: context,
       builder: (context) => DeliverModal(order: _order, onAccept: () {}),
     );
-    Navigator.of(context).pop();
+    Navigator.of(context).pop("delivered");
   }
 
   Marker getDestinationMaker() {

@@ -1,6 +1,7 @@
 import 'package:driver/api/gosit_api.dart';
 import 'package:driver/helpers/location.dart';
 import 'package:driver/models/GositOrder.dart';
+import 'package:driver/screens/gosit/fragments/running/no_order_framgent.dart';
 import 'package:driver/screens/gosit/fragments/running/order_card.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/StaticValues.dart';
@@ -25,6 +26,8 @@ class RunningFragmentState extends State<RunningFragment> {
 
   Position _currentPosition;
 
+  bool firstCall = true;
+
   void onFinish() {
     setState(() {
       _orders = [];
@@ -36,6 +39,7 @@ class RunningFragmentState extends State<RunningFragment> {
     List<GositOrder> orders = await GositApi.runningOrders();
     setState(() {
       _orders = orders;
+      firstCall = false;
     });
   }
 
@@ -80,9 +84,18 @@ class RunningFragmentState extends State<RunningFragment> {
     super.dispose();
   }
 
+  noOrdersAvailable() {
+    if (_orders.length < 1 && !firstCall)
+      return true;
+    else
+      return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return noOrdersAvailable()
+        ? noOrderFragment(context)
+        :Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
       height: MediaQuery.of(context).size.height * 0.76,

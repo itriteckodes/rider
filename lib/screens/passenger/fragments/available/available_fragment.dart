@@ -4,15 +4,14 @@ import 'package:driver/helpers/location.dart';
 import 'package:driver/helpers/text_helper.dart';
 import 'package:driver/models/PassengerOrder.dart';
 import 'package:driver/screens/passenger/fragments/available/order_card.dart';
-import 'package:driver/screens/passenger/fragments/available/waiting_fragment.dart';
+import 'package:driver/screens/passenger/fragments/available/no_order_fragment.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as Loc;
 import 'package:driver/models/RouteInfo.dart';
-import 'package:driver/api/location_api.dart';  
+import 'package:driver/api/location_api.dart';
 
 class AvailableFragment extends StatefulWidget {
   AvailableFragment({Key key, @required this.switchFragment}) : super(key: key);
@@ -23,10 +22,10 @@ class AvailableFragment extends StatefulWidget {
 }
 
 class _AvailableFragmentState extends State<AvailableFragment> {
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
   Loc.Location location = Loc.Location();
   var locationSubscription;
+
+  bool firstCall = true;
 
   Position _currentPosition;
 
@@ -58,6 +57,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     var orders = await PassengerApi.availableOrders();
     setState(() {
       _orders = orders;
+      firstCall = false;
     });
   }
 
@@ -114,10 +114,17 @@ class _AvailableFragmentState extends State<AvailableFragment> {
     });
   }
 
+  noOrdersAvailable() {
+    if (_orders.length < 1 && !firstCall)
+      return true;
+    else
+      return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _orders.length < 1
-        ? waitingFragment(context)
+    return noOrdersAvailable()
+        ? noOrderFragment(context)
         : Container(
             width: MediaQuery.of(context).size.width * 0.9,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),

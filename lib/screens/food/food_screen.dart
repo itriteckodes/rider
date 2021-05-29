@@ -1,3 +1,4 @@
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/screens/food/bottom_navigation.dart';
 import 'package:driver/screens/food/fragments/available/available_fragment.dart';
 import 'package:driver/screens/food/fragments/running/running_fragment.dart';
@@ -26,11 +27,19 @@ class _FoodScreenState extends State<FoodScreen> {
   }
 
   @override
+  void initState() {
+    if (Auth.user().mode == 'food') {
+      _navigationMenuIndex = 1;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     
     var _fragments = [
       AvailableFragment(switchFragment: switchFragment),
-      RunningFragment(),
+      RunningFragment(switchFragment: switchFragment),
       HistoryFragment(),
     ];
 
