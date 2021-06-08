@@ -100,6 +100,7 @@ class _AvailableFragmentState extends State<AvailableFragment> {
   }
 
   void streamListener(message) {
+    print("");
     var response = jsonDecode(message);
     if (response["type"] == "newpassengerorder") {
       addToOrders(PassengerOrder(response));

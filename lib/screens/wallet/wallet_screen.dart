@@ -1,4 +1,5 @@
 import 'package:driver/api/wallet_api.dart';
+import 'package:driver/helpers/auth.dart';
 import 'package:driver/models/Wallet.dart';
 import 'package:driver/screens/wallet/box.dart';
 import 'package:driver/screens/wallet/card.dart';
@@ -77,14 +78,12 @@ class _WalletScreenState extends State<WalletScreen> {
                         ),
                       ),
                     ),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        color: Clr.white,
-                        fontSize: Sizer.fontSix(),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.home, color: Clr.white, size: Sizer.fontFour()),
+                    ),
                   ],
                 ),
               ),
@@ -106,16 +105,18 @@ class _WalletScreenState extends State<WalletScreen> {
                     children: [
                       Row(
                         children: [
-                          box(context, 'Avaialble Balance', 'PKR ' + (_wallet!=null?_wallet.balance.toString():"")+'/-', Border(right: BorderSide(color: Clr.green))),
-                          box(context, 'Lifetime Earning', 'PKR ' + (_wallet!=null?_wallet.lifeTimeEarning.toString():"")+'/-', Border()),
+                          box(context, 'Avaialble Balance', 'PKR ' + (_wallet != null ? _wallet.balance.toString() : "") + '/-',
+                              Border(right: BorderSide(color: Clr.green)),_wallet != null?(_wallet.balance>0?Clr.green:Clr.red):Clr.green),
+                          box(context, 'Account Limit', 'PKR ' + Auth.user().capAmount.toString() + '/-', Border(),Clr.green),
                         ],
                       ),
                       Row(
                         children: [
-                          box(context, 'Total Passengers', (_wallet!=null?_wallet.totalPassengers.toString():""), Border(right: BorderSide(color: Clr.green), top: BorderSide(color: Clr.green))),
-                          box(context, 'Orders delivered', (_wallet!=null?_wallet.ordersDelivered.toString():""), Border(top: BorderSide(color: Clr.green))),
+                          box(context, 'Total Passengers', (_wallet != null ? _wallet.totalPassengers.toString() : ""),
+                              Border(right: BorderSide(color: Clr.green), top: BorderSide(color: Clr.green)),Clr.green),
+                          box(context, 'Orders delivered', (_wallet != null ? _wallet.ordersDelivered.toString() : ""), Border(top: BorderSide(color: Clr.green)),Clr.green),
                         ],
-                      ),
+                      ), 
                     ],
                   ),
                 ),
@@ -125,8 +126,8 @@ class _WalletScreenState extends State<WalletScreen> {
                 left: MediaQuery.of(context).size.width * 0.015,
                 child: Column(
                   children: [
-                    card(context, 'Withdraw', FontAwesomeIcons.moneyBillWave, () {
-                      Navigator.pushNamed(context, 'withdraw');
+                    card(context, 'Deposit', FontAwesomeIcons.moneyBillWave, () {
+                      Navigator.pushNamed(context, 'deposit');
                     }),
                     SizedBox(height: 5),
                     card(context, 'Transactions', FontAwesomeIcons.buffer, () {

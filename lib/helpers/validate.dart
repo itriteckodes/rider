@@ -14,7 +14,7 @@ class Validate {
     return true;
   }
   
-  static register(nameController, cnicController, phoneController, emailController, passwordController, confirmPasswordController){
+  static register(nameController, cnicController, genderController, phoneController, emailController, passwordController, confirmPasswordController){
     if (nameController.text == "") {
       Fluttertoast.showToast(msg: "Please enter name");
       return false;
@@ -68,6 +68,19 @@ class Validate {
   static withdrawRequest(amount){
     if (int.parse(amount) > Auth.user().balance) {
       Fluttertoast.showToast(msg: "You don't have enough balance");
+      return false;
+    }
+
+    return true;
+  }
+  
+  static depositRequest(amountController, transactionIdController){
+   if (amountController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter amount");
+      return false;
+    }
+    if (transactionIdController.text == "") {
+      Fluttertoast.showToast(msg: "Please enter TransactionId");
       return false;
     }
 

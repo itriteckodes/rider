@@ -5,9 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 Widget currentLocationButton(mapController, _currentPosition) {
   return SafeArea(
     child: Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.centerRight,
       child: Padding(
-        padding: const EdgeInsets.only(right: 10.0, bottom: 170.0),
+        padding: const EdgeInsets.only(right: 10.0, top: 30),
         child: ClipOval(
           child: Material(
             color: Clr.green, // button color

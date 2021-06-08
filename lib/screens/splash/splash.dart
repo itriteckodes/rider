@@ -3,6 +3,7 @@ import 'package:driver/helpers/easyloading_helper.dart';
 import 'package:driver/helpers/firebase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -31,6 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
     authCheck = await Auth.check();
     return Future.value(true);
   }
+  
+  Future checkPermissions() async {
+    await Permission.location.request();
+    await Permission.storage.request();
+    return Future.value(true);
+  }
 
   Future completeAnimation() async {
     await Future.delayed(Duration(seconds: 5, milliseconds: 0), () async {
@@ -41,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void gotoNextScreen() async {
-    await Future.wait([completeAnimation(), checkAuth()]);
+    await Future.wait([checkPermissions(), completeAnimation(), checkAuth()]);
 
     if (authCheck)
       Navigator.popAndPushNamed(context, 'home');

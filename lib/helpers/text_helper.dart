@@ -10,4 +10,8 @@ class TextHelper {
   static String firebase(message) {
     return message.data.toString().substring(6, message.data.toString().length - 1);
   }
+
+  static String limited(String myString, int cutoff) {
+    return (myString.length <= cutoff) ? myString : '${myString.substring(0, cutoff)}...';
+  }
 }

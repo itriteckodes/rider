@@ -1,11 +1,13 @@
 import 'package:driver/api/gosit_api.dart';
 import 'package:driver/helpers/location.dart';
 import 'package:driver/models/GositOrder.dart';
-import 'package:driver/screens/gosit/fragments/running/no_order_framgent.dart';
-import 'package:driver/screens/gosit/fragments/running/order_card.dart';
+import 'package:driver/screens/gosit/fragments/running/meter_button.dart';
+import 'package:driver/screens/gosit/fragments/running/show_modal.dart';
 import 'package:driver/values/Clr.dart';
+import 'package:driver/values/Sizer.dart';
 import 'package:driver/values/StaticValues.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as Loc;
 import 'package:driver/models/RouteInfo.dart';
@@ -91,21 +93,116 @@ class RunningFragmentState extends State<RunningFragment> {
       return false;
   }
 
+  start(context) async {
+    EasyLoading.show();
+    List<GositOrder> orders = await GositApi.startOrder(await Geo.location(), "Sit & Go Customer");
+    setState(() {
+      _orders = orders;
+      firstCall = false;
+    });
+    EasyLoading.dismiss();
+  }
+
+  stop(context) async {
+    var finished = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ShowModal(
+          order: _orders[0],
+        );
+      },
+    );
+    if (finished) onFinish();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return noOrdersAvailable()
-        ? noOrderFragment(context)
-        :Container(
+    return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Clr.white),
       height: MediaQuery.of(context).size.height * 0.76,
-      child: ListView(
+      child: Column(
         children: [
           SizedBox(
-            height: 10,
+            height: 50,
           ),
           if (_orders.length > 0)
-            for (var order in _orders) OrderCard(order: order, onFinish: onFinish),
+            Text(
+              "Running",
+              style: TextStyle(color: Clr.green, fontSize: Sizer.fontTwo()),
+            ),
+          if (_orders.length == 0)
+            Text(
+              "Stopped",
+              style: TextStyle(color: Clr.red, fontSize: Sizer.fontTwo(), fontFamily: 'digital', letterSpacing: 2),
+            ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Started : ",
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontFour(), fontFamily: 'digital', letterSpacing: 2),
+                ),
+                Text(
+                  (_orders.length > 0 ? _orders[0].startedAt.toString() : "----"),
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontThree(), fontFamily: 'digital', letterSpacing: 2),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Distance : ",
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontFour(), fontFamily: 'digital', letterSpacing: 2, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  (_orders.length > 0 ? _orders[0].distance.toString() + " KM" : "0 KM"),
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontThree(), fontFamily: 'digital', letterSpacing: 2, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Fare : ",
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontFour(), fontFamily: 'digital', letterSpacing: 2, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  (_orders.length > 0 ? "PKR " + _orders[0].fare.toString() : " PKR 0"),
+                  style: TextStyle(color: Clr.green, fontSize: Sizer.fontThree(), fontFamily: 'digital', letterSpacing: 2, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          if (_orders.length == 0) meterButton(context, start, "Start Now", Clr.green),
+          if (_orders.length > 0) meterButton(context, stop, "Stop Now", Clr.red),
+          SizedBox(height: 10,),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Image(image: AssetImage("lib/assets/images/logo.png")),
+          ),
         ],
       ),
     );

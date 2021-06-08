@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget card(context, text, icon ,{onTap, active = true}) {
-  var fontColor = active ? Clr.green : Clr.silver;
+  var fontColor = active ? Clr.green : Clr.red;
   return Container(
     width: MediaQuery.of(context).size.width * 0.95,
     height: 70,
     decoration: BoxDecoration(
-      color: Clr.white,
       border: Border.all(color: Clr.green),
       borderRadius: BorderRadius.all(
         Radius.circular(15),

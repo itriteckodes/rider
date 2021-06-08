@@ -61,7 +61,7 @@ class GositApi {
 
     url += '?api_token=' + Auth.user().apiToken;
 
-    var data = {'origin_location': (location.latitude.toString() + ", " + location.longitude.toString()), 'name': name};
+    var data = {'origin_location': (location.latitude.toString() + "," + location.longitude.toString()), 'name': name};
 
     var response = await Api.execute(url: url, data: data);
 
@@ -71,7 +71,11 @@ class GositApi {
     if (!response['error']) {
       Fluttertoast.showToast(msg: 'Order started');
       Auth.login(User(response));
-      return true;
+      List <GositOrder> orders = [];
+      for (var order in response['orders']) {
+        orders.add(GositOrder(order));
+      }
+      return orders;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
       return false;
@@ -99,14 +103,18 @@ class GositApi {
 
     url += '?api_token=' + Auth.user().apiToken;
 
-    var data = {'gosit_id': order.id, 'destination_location': (location.latitude.toString() + ", " + location.longitude.toString())};
+    var data = {'gosit_id': order.id, 'destination_location': (location.latitude.toString() + "," + location.longitude.toString())};
 
     var response = await Api.execute(url: url, data: data);
 
     if (!response['error']) {
       Fluttertoast.showToast(msg: 'Order finished');
       Auth.login(User(response));
-      return GositOrder(response['order']);
+      List <GositOrder> orders = [];
+      for (var order in response['orders']) {
+        orders.add(GositOrder(order));
+      }
+      return orders;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
       return false;

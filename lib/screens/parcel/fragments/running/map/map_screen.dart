@@ -10,6 +10,7 @@ import 'package:driver/values/Constants.dart';
 import 'package:driver/values/RiderStatus.dart';
 import 'package:driver/values/secrets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,7 +27,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController _mapController;
-  CameraPosition _initialCameraPosition = CameraPosition(target: LatLng(0.0, 0.0));
+  CameraPosition _initialCameraPosition;
   Loc.Location location = Loc.Location();
   var locationSubscription;
 
@@ -156,11 +157,14 @@ class _MapScreenState extends State<MapScreen> {
       _destinationPosition = Position(latitude: _order.destinationLocation.lat, longitude: _order.destinationLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
 
     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    _initialCameraPosition =  CameraPosition(target: LatLng(_currentPosition.latitude, _currentPosition.longitude));
+    setState(() {});
     markers.add(getDestinationMaker());
     await createPolylines();
     await getRouteInfo();
     focusCamera();
     runLocationService();
+    EasyLoading.dismiss();
   }
 
   _MapScreenState(order) {
@@ -193,6 +197,7 @@ class _MapScreenState extends State<MapScreen> {
           key: _scaffoldKey,
           body: Stack(
             children: [
+              if(_initialCameraPosition != null)
               GoogleMap(
                 markers: markers != null ? Set<Marker>.from(markers) : null,
                 initialCameraPosition: _initialCameraPosition,

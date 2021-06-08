@@ -6,7 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileApi {
-  static update(name, cnic, email, password, phone, dob, city, address, vehicleType, regNo, modelNo, color, profileImage, cnicFrontImage, cnicBackImage, drivingLicense) async {
+  static update(name, cnic, email, password, phone, dob, city, address, vehicleType, regNo, modelNo, modelYear, color, profileImage, cnicFrontImage, cnicBackImage, drivingLicense) async {
     EasyLoading.show();
 
    var url = Strings.baseUrl + 'profile/update';
@@ -25,6 +25,7 @@ class ProfileApi {
       'vehicle_type' : vehicleType,
       'vehicle_reg_no' : regNo,
       'vehicle_model_no' : modelNo,
+      'vehicle_model_year' : modelYear,
       'vehicle_color' : color,
       'image' : profileImage,
       'cnicfront' : cnicFrontImage,

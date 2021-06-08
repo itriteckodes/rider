@@ -22,7 +22,7 @@ Widget SideDrawer(context) {
               radius: 45,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(45)),
-                child: Image.network(Auth.user().profileImage),
+                child: FadeInImage(image: NetworkImage(Auth.user().profileImage), placeholder: AssetImage('lib/assets/images/user.png')),
               ),
             ),
           ),
@@ -48,10 +48,10 @@ Widget SideDrawer(context) {
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.moneyBillWave, color: Clr.green),
-            title: Text('Withdraw'),
+            title: Text('Deposit'),
             selected: false,
             onTap: () {
-              Navigator.popAndPushNamed(context, 'withdraw');
+              Navigator.popAndPushNamed(context, 'deposit');
             },
           ),
           ListTile(
@@ -68,6 +68,22 @@ Widget SideDrawer(context) {
             selected: false,
             onTap: () {
               Navigator.popAndPushNamed(context, 'profile');
+            },
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.film, color: Clr.green),
+            title: Text('Free Movies'),
+            selected: false,
+            onTap: () {
+              Navigator.popAndPushNamed(context, 'movies');
+            },
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.question, color: Clr.green),
+            title: Text('Support'),
+            selected: false,
+            onTap: () {
+              Navigator.popAndPushNamed(context, 'support');
             },
           ),
           ListTile(

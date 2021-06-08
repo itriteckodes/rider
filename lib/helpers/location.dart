@@ -1,7 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
 class Geo {
   static location() async {

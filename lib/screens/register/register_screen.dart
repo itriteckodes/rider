@@ -1,6 +1,7 @@
 import 'package:driver/api/auth_api.dart';
 import 'package:driver/helpers/auth.dart';
 import 'package:driver/helpers/validate.dart';
+import 'package:driver/screens/register/select.dart';
 import 'package:driver/screens/register/button.dart';
 import 'package:driver/screens/register/already_registered.dart';
 import 'package:driver/screens/register/input.dart';
@@ -15,20 +16,32 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  var selectedGender = "male";
+
   final nameController = TextEditingController();
   final cnicController = TextEditingController();
+  final genderController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   onPressRegister(context) async {
-    if (Validate.register(nameController, cnicController, phoneController, emailController, passwordController, confirmPasswordController)) {
-      if (await AuthApi.register(nameController.text, cnicController.text, phoneController.text, emailController.text, passwordController.text, confirmPasswordController.text)) {
+    FocusScope.of(context).unfocus();
+    if (Validate.register(nameController, cnicController, genderController, phoneController, emailController, passwordController, confirmPasswordController)) {
+      if (await AuthApi.register(nameController.text, cnicController.text, genderController.text, phoneController.text, emailController.text, passwordController.text, confirmPasswordController.text)) {
         Auth.save(emailController.text, passwordController.text);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     }
+  }
+
+   onChangeGender(value) {
+      setState(() {
+        selectedGender = value;
+        genderController.text = value;
+      });
   }
 
   @override
@@ -73,6 +86,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
 
                   Input(context, cnicController, 'Cnic'),
+
+                  SizedBox(
+                    height: 25,
+                  ),
+                  
+                  select(context, onChangeGender, selectedGender),
 
                   SizedBox(
                     height: 25,

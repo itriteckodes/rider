@@ -27,7 +27,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController _mapController;
-  CameraPosition _initialCameraPosition = CameraPosition(target: LatLng(0.0, 0.0));
+  CameraPosition _initialCameraPosition;
   Loc.Location location = Loc.Location();
   var locationSubscription;
 
@@ -82,8 +82,10 @@ class _MapScreenState extends State<MapScreen> {
     double maxy = (_currentPosition.latitude <= _destinationPosition.latitude) ? _destinationPosition.latitude : _currentPosition.latitude;
     double maxx = (_currentPosition.longitude <= _destinationPosition.longitude) ? _destinationPosition.longitude : _currentPosition.longitude;
 
-    _southwestCoordinates = Position(latitude: miny, longitude: minx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
-    _northeastCoordinates = Position(latitude: maxy, longitude: maxx, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+    _southwestCoordinates =
+        Position(latitude: miny, longitude: minx, heading: 0.0, speed: 0.0, altitude: 0.0, accuracy: 0.0, timestamp: DateTime.now(), speedAccuracy: 0.0);
+    _northeastCoordinates =
+        Position(latitude: maxy, longitude: maxx, heading: 0.0, speed: 0.0, altitude: 0.0, accuracy: 0.0, timestamp: DateTime.now(), speedAccuracy: 0.0);
 
     _mapController.animateCamera(
       CameraUpdate.newLatLngBounds(
@@ -130,7 +132,15 @@ class _MapScreenState extends State<MapScreen> {
     locationSubscription = location.onLocationChanged.listen((locationData) {
       if (locationData != null) {
         setState(() {
-          _currentPosition = Position(latitude: locationData.latitude, longitude: locationData.longitude, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+          _currentPosition = Position(
+              latitude: locationData.latitude,
+              longitude: locationData.longitude,
+              heading: 0.0,
+              speed: 0.0,
+              altitude: 0.0,
+              accuracy: 0.0,
+              timestamp: DateTime.now(),
+              speedAccuracy: 0.0);
         });
         getRouteInfo();
       }
@@ -146,20 +156,42 @@ class _MapScreenState extends State<MapScreen> {
       else
         buttonEnabled = false;
     });
+
+    print("TRITEC : " + route.distance.toString());
+
   }
 
   _initPostions() async {
     if (_order.status == RiderStatus.accepted)
-      _destinationPosition = Position(latitude: _order.hotelLocation.lat, longitude: _order.hotelLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+      _destinationPosition = Position(
+          latitude: _order.hotelLocation.lat,
+          longitude: _order.hotelLocation.long,
+          heading: 0.0,
+          speed: 0.0,
+          altitude: 0.0,
+          accuracy: 0.0,
+          timestamp: DateTime.now(),
+          speedAccuracy: 0.0);
     else
-      _destinationPosition = Position(latitude: _order.customerLocation.lat, longitude: _order.customerLocation.long, heading: 0.0,speed: 0.0,altitude: 0.0,accuracy: 0.0,timestamp: DateTime.now(), speedAccuracy: 0.0);
+      _destinationPosition = Position(
+          latitude: _order.customerLocation.lat,
+          longitude: _order.customerLocation.long,
+          heading: 0.0,
+          speed: 0.0,
+          altitude: 0.0,
+          accuracy: 0.0,
+          timestamp: DateTime.now(),
+          speedAccuracy: 0.0);
 
     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    _initialCameraPosition =  CameraPosition(target: LatLng(_currentPosition.latitude, _currentPosition.longitude));
+    setState(() {});
     markers.add(getDestinationMaker());
     await createPolylines();
     await getRouteInfo();
     focusCamera();
     runLocationService();
+    EasyLoading.dismiss();
   }
 
   _MapScreenState(order) {
@@ -171,7 +203,6 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     _route = RouteInfo(null);
     _initPostions();
-    EasyLoading.dismiss();
   }
 
   @override
@@ -193,6 +224,7 @@ class _MapScreenState extends State<MapScreen> {
           key: _scaffoldKey,
           body: Stack(
             children: [
+              if(_initialCameraPosition != null)
               GoogleMap(
                 markers: markers != null ? Set<Marker>.from(markers) : null,
                 initialCameraPosition: _initialCameraPosition,

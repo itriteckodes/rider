@@ -2,7 +2,7 @@ import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-Widget box(context, text, value, border) {
+Widget box(context, text, value, border, color) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.482,
     height: 100,
@@ -16,8 +16,9 @@ Widget box(context, text, value, border) {
         children: [
           Text(
             value,
-            style: TextStyle(color: Clr.green, fontSize: Sizer.fontFive(), fontWeight: FontWeight.bold),
+            style: TextStyle(color: color, fontSize: Sizer.fontFive(), fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 10,),
           Text(
             text,
             style: TextStyle(color: Clr.black, fontSize: Sizer.fontSeven(), fontWeight: FontWeight.normal),

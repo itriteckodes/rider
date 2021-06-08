@@ -32,6 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final addressController = TextEditingController();
   final regNoController = TextEditingController();
   final modelNoController = TextEditingController();
+  final modelYearController = TextEditingController();
   final vehicleColorController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -103,6 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       selectedVehicle.toString(),
       regNoController.text,
       modelNoController.text,
+      modelYearController.text,
       vehicleColorController.text,
       profileImageString,
       cnicFrontImageString,
@@ -127,6 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     selectedVehicle = Auth.user().vehicleType;
     regNoController.text = Auth.user().vehicleRegNo;
     modelNoController.text = Auth.user().vehicleModelNo;
+    modelYearController.text = Auth.user().vehicleModelYear;
     vehicleColorController.text = Auth.user().vehicleColor;
 
   }
@@ -232,6 +235,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           children: [
                             if(Auth.user().comment != null)
+                            SizedBox(height: 20,),
+                            if(Auth.user().comment != null)
                             Container(
                               width: MediaQuery.of(context).size.width * 0.80,
                               child: Text(Auth.user().comment ?? " "),
@@ -289,6 +294,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(height: 10),
                             input(context, regNoController, 'Vehicle Reg No.'),
                             SizedBox(height: 10),
+                            input(context, modelYearController, 'Vehicle Model Year'),
+                            SizedBox(height: 10),
                             input(context, modelNoController, 'Vehicle Model'),
                             SizedBox(height: 10),
                             input(context, vehicleColorController, 'vehicle Color'),
@@ -299,7 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(height: 10),
                             imageInput(showPicker, 'drivingLicense', drivingLicense, Auth.user().dirvingLicense),
                             SizedBox(height: 10),
-                            button(context, onPress: updateProfile),
+                            button(context, onPress: updateProfile,disabled: Auth.user().approved),
                             SizedBox(height: 10),
                           ],
                         ),

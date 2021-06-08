@@ -26,7 +26,7 @@ class AuthApi {
     if (!response['error']) {
       Auth.login(User(response));
       Ram.onlineChoice = Auth.user().online;
-      // OnlineService(Constants.onlineDuration);
+      OnlineService(Constants.onlineDuration);
       return true;
     } else {
       Fluttertoast.showToast(msg: response['error_data']);
@@ -53,7 +53,7 @@ class AuthApi {
     }
   }
 
-  static register(name, cnic, phone, email, password, confirmPassword) async {
+  static register(name, cnic, gender, phone, email, password, confirmPassword) async {
     EasyLoading.show();
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -61,7 +61,7 @@ class AuthApi {
 
     var url = Strings.baseUrl + 'register';
 
-    var data = {'name': name, 'id_card_no': cnic, 'phone': phone, 'email': email, 'password': password, 'confirm_password': confirmPassword, 'firebase_token': token};
+    var data = {'name': name, 'id_card_no': cnic,'gender': gender, 'phone': phone, 'email': email, 'password': password, 'confirm_password': confirmPassword, 'firebase_token': token};
 
     var response = await Api.execute(url: url, data: data);
 

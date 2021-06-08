@@ -1,5 +1,4 @@
 import 'package:driver/api/auth_api.dart';
-import 'package:driver/api/status_api.dart';
 import 'package:driver/helpers/auth.dart';
 import 'package:driver/helpers/validate.dart';
 import 'package:driver/screens/login/button.dart';
@@ -21,9 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   onPressLogin(context) async {
+    FocusScope.of(context).unfocus();
     if (Validate.login(emailController, passwordController)) {
       if (await AuthApi.login(emailController.text, passwordController.text)) {
-        await StatusApi.online();
         Auth.save(emailController.text, passwordController.text);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }

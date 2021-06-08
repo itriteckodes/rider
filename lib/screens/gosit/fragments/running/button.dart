@@ -12,6 +12,7 @@ Widget Button(context, onPress, text, color) {
     ),
     child: InkWell(
       onTap: () {
+        print("Went throuhg here");
         onPress(context);
       },
       child: Ink(

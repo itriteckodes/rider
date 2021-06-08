@@ -1,3 +1,6 @@
+import 'package:driver/screens/deposit/deposit_screen.dart';
+import 'package:driver/screens/movies/movies_screen.dart';
+import 'package:driver/screens/support/support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:driver/screens/food/food_screen.dart';
 import 'package:driver/screens/gosit/gosit_screen.dart';
@@ -13,6 +16,7 @@ import 'package:driver/screens/transactions/transaction_screen.dart';
 import 'package:driver/screens/wallet/wallet_screen.dart';
 import 'package:driver/screens/withdraw/withdraw_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -42,13 +46,16 @@ class MyApp extends StatelessWidget {
         'passenger': (context) => PassengerScreen(),
         'wallet': (context) => WalletScreen(),
         'profile': (context) => ProfileScreen(),
-        'withdraw': (context) => WithdrawScreen(),
+        'withdraw': (context) => WithdrawScreen(),     
+        'deposit': (context) => DepositScreen(),
         'transactions': (context) => TransactionScreen(),
+        'movies': (context) => MoviesScreen(),
+        'support': (context) => SupportScreen(),
       },
     );
   }
 }
 
-//12345@HEXONIC@jbg
-//@JAK@jbg@12345
-//215
+//HEXONIC@jbg@12345
+
+/////// !I/Buffer, !D/Buffer, !I/Counters, !I/chatty

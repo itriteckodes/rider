@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 Widget zoomButtons(mapController) {
   return SafeArea(
     child: Padding(
-      padding: const EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.only(left: 10.0, bottom: 40),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

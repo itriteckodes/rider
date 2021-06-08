@@ -1,7 +1,5 @@
 import 'package:driver/screens/gosit/bottom_navigation.dart';
 import 'package:driver/screens/gosit/fragments/history/history_fragment.dart';
-import 'package:driver/screens/gosit/fragments/map/map_screen.dart';
-import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
 import 'package:driver/screens/gosit/fragments/running/running_fragment.dart';
 import 'package:driver/screens/static/baloon.dart';
 import 'package:driver/values/Clr.dart';
@@ -24,31 +22,17 @@ class _GositScreenState extends State<GositScreen> {
   @override
   void initState() {
     super.initState();
-    _navigationMenuIndex = 1;
+    _navigationMenuIndex = 0;
     _screens = [
-      Text('empty'),
-      RunningFragment(
-        key: _key,
-      ),
-      null,
+      RunningFragment(),
       HistoryFragment(),
     ];
   }
 
   onTapBottomMenu(int index) async {
-    if (index == 0)
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return NewModal();
-        },
-      );
-    else if (index == 2)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
-    else
-      setState(() {
-        _navigationMenuIndex = index;
-      });
+    setState(() {
+      _navigationMenuIndex = index;
+    });
 
     _key.currentState.fetchOrders();
   }
@@ -86,7 +70,7 @@ class _GositScreenState extends State<GositScreen> {
                             ),
                           ),
                           Text(
-                            'Go Sit Orders',
+                            'Sit & Go Orders',
                             style: TextStyle(
                               color: Clr.white,
                               fontSize: Sizer.fontTwo(),

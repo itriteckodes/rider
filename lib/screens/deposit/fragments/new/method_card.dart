@@ -1,31 +1,25 @@
-import 'package:driver/models/GositOrder.dart';
-import 'package:driver/screens/gosit/fragments/new/new_modal.dart';
+import 'package:driver/models/Account.dart';
+import 'package:driver/models/DepositMethod.dart';
 import 'package:driver/values/Clr.dart';
 import 'package:driver/values/Sizer.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  const OrderCard({Key key, @required this.order, @required this.onAdd}) : super(key: key);
-  final GositOrder order;
-  final onAdd;
+class MethodCard extends StatelessWidget {
+  const MethodCard({Key key, @required this.method, @required this.onTap}) : super(key: key);
+  final DepositMethod method;
+  final onTap;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: 90,
+          height: 100,
           decoration: BoxDecoration(color: Clr.white),
           child: InkWell(
             onTap: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return NewModal();
-                },
-              ).then((val) {
-                onAdd();
-              });
+              onTap(method);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -43,28 +37,26 @@ class OrderCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 8.0, right: 8.0, bottom: 8.0),
-                            child: Image(
-                              image: AssetImage('lib/assets/images/user.png'),
-                            ),
+                            child: FadeInImage(image: NetworkImage(method.image), placeholder: AssetImage('lib/assets/images/loader.png')),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  order.name,
+                                  method.title,
                                   style: TextStyle(
                                     color: Clr.black,
-                                    fontSize: Sizer.fontSix(),
+                                    fontSize: Sizer.fontFive(),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 Text(
-                                  order.name,
+                                  method.number,
                                   style: TextStyle(
-                                    color: Clr.silver,
+                                    color: Clr.black,
                                     fontSize: Sizer.fontSeven(),
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -73,13 +65,9 @@ class OrderCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Distance: ',
-                                      style: TextStyle(color: Clr.green, fontSize: Sizer.fontSix(), fontWeight: FontWeight.normal),
-                                    ),
-                                    Text(
-                                      order.name.toString() + ' km',
+                                      method.method,
                                       style: TextStyle(
-                                        color: Clr.black,
+                                        color: Clr.green,
                                         fontSize: Sizer.fontSeven(),
                                         fontWeight: FontWeight.bold,
                                       ),

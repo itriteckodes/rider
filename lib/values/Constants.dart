@@ -1,6 +1,6 @@
 class Constants {
   // Distance at which rider is allowed to pick order
-  static const nearBy = 50; //meters
+  static const nearBy = 0.15; //KMs
   
-  static const onlineDuration = 3000; //miliseconds
+  static const onlineDuration = 5000; //miliseconds
 }

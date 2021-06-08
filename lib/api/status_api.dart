@@ -10,10 +10,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class StatusApi {
   static online() async {
     Ram.onlineChoice = true;
-    EasyLoading.show();
-    var url = Strings.baseUrl + 'status/online';
+    // EasyLoading.show();
 
-    print('ONline Started');
+    var url = Strings.baseUrl + 'status/online';
 
     url += '?api_token=' + Auth.user().apiToken;
 
@@ -22,9 +21,9 @@ class StatusApi {
     var data = {'location': location.latitude.toString() + ',' + location.longitude.toString()};
 
     var response = await Api.execute(data: data, url: url);
-    print('ONline Ended');
 
-    EasyLoading.dismiss();
+    // EasyLoading.dismiss();
+
     if (!response['error']) {
       Auth.login(User(response));
       return true;
@@ -36,8 +35,7 @@ class StatusApi {
 
   static offline() async {
     Ram.onlineChoice = false;
-    EasyLoading.show();
-    print('Offline Started');
+    // EasyLoading.show();
 
     var url = Strings.baseUrl + 'status/offline';
 
@@ -47,9 +45,7 @@ class StatusApi {
 
     var response = await Api.execute(data: data, url: url);
 
-    print('Offline Ended');
-
-    EasyLoading.dismiss();
+    // EasyLoading.dismiss();
     if (!response['error']) {
       Auth.login(User(response));
       return true;

@@ -18,16 +18,8 @@ Widget BottomNavigation(_navigationMenuIndex, onTapBottomMenu) {
     },
     items: [
       BottomNavigationBarItem(
-        label: 'Add New',
-        icon: Icon(FontAwesomeIcons.plusCircle),
-      ),
-      BottomNavigationBarItem(
         label: 'Running',
         icon: Icon(FontAwesomeIcons.sync),
-      ),
-      BottomNavigationBarItem(
-        label: 'Map',
-        icon: Icon(FontAwesomeIcons.globe),
       ),
       BottomNavigationBarItem(
         label: 'History',

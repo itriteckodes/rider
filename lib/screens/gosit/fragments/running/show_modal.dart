@@ -33,7 +33,7 @@ class ShowModal extends StatelessWidget {
   contentBox(context) {
     var px = MediaQuery.of(context).size.width * 0.05;
     var pt = MediaQuery.of(context).size.height * 0.25;
-    var pb = MediaQuery.of(context).size.height * 0.47;
+    var pb = MediaQuery.of(context).size.height * 0.50;
     return Container(
       padding: EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 20),
       margin: EdgeInsets.only(top: pt, left: px, right: px, bottom: pb),
@@ -43,75 +43,15 @@ class ShowModal extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'Started at : ',
+          Text(
+                'Are you sure you want to finish this ride?',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Clr.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSix(),
+                  fontWeight: FontWeight.normal,
+                  fontSize: Sizer.fontFive(),
                 ),
               ),
-              Text(
-                order.startedAt,
-                style: TextStyle(
-                  color: Clr.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSeven(),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'Distance  : ',
-                style: TextStyle(
-                  color: Clr.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSix(),
-                ),
-              ),
-              Text(
-                order.distance.toString() + ' km',
-                style: TextStyle(
-                  color: Clr.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSeven(),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'Total Fare: ',
-                style: TextStyle(
-                  color: Clr.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSix(),
-                ),
-              ),
-              Text(
-                order.fare.toString() + ' rupees',
-                style: TextStyle(
-                  color: Clr.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizer.fontSeven(),
-                ),
-              ),
-            ],
-          ),
           SizedBox(
             height: 35,
           ),

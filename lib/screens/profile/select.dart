@@ -18,7 +18,7 @@ Widget select(context, onChanged, selectedValue) {
           iconEnabledColor: Clr.green,
           value: selectedValue,
           items: [
-            DropdownMenuItem(value: 1, child: Text("Luxury Car")),
+            DropdownMenuItem(value: 1, child: Text("Mini Cab")),
             DropdownMenuItem(value: 2, child: Text("AC Car")),
             DropdownMenuItem(value: 3, child: Text("Non AC Car")),
             DropdownMenuItem(value: 4, child: Text("Bike")),
